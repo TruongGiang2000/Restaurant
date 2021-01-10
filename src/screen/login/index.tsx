@@ -1,32 +1,63 @@
-import React from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  TextInput,
-  KeyboardAvoidingView,
-} from 'react-native';
+import React, {useState} from 'react';
+import {View, StyleSheet, Text, Pressable} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import Background from '../../component/Background';
+import {BackgroundBig, ButtonCustom} from '../../component';
 import {mainColors} from '../../contants/Colors';
-const Login = (props: any) => {
+import TextInputCustom from '../../component/TextInputCustom';
+import {Fonts} from '../../contants';
+export const Login = (props: any) => {
+  const [userName, setUserName] = useState('');
+  const [pass, setPass] = useState('');
+  const [txtErrorUser, setTxtErrorUser] = useState(null);
+  const [txtErrorPass, setTxtErrorPass] = useState(null);
+  const onChangeUser = (value: any) => {
+    setUserName(value);
+  };
+  const onChangePass = (value: any) => {
+    setPass(value);
+  };
+  const onPress = () => {
+    // if (userName.trim() == 'MrCu' && pass.trim() == 'MrCu') {
+    props.navigation.navigate('Home');
+    // }
+    // if (userName != 'MrCu') {
+    //   setTxtErrorUser('Tài khoản không đúng!');
+    // } else {
+    //   setTxtErrorUser(null);
+    // }
+    // if (pass != 'MrCu') {
+    //   setTxtErrorPass('Mật khẩu không đúng!');
+    // } else {
+    //   setTxtErrorPass(null);
+    // }
+  };
   return (
-    <Background
-      imageStyle={styles.image}
-      multipleFoodStyle={styles.multipleFood}
-      bottomBackground={styles.bottomBackground}>
+    <BackgroundBig>
       <View style={styles.MainContainer}>
         <Text style={styles.loginTxt}>Đăng nhập</Text>
-        <TextInput
-          style={styles.input}
-          placeholder={'Tài khoản'}
-          placeholderTextColor={mainColors.titleColor}
+        <TextInputCustom
+          style={styles.topSpace}
+          placeHolder={'Tài khoản'}
+          onChangeText={onChangeUser}
+          txtError={txtErrorUser}
+        />
+        <TextInputCustom
+          style={styles.topSpace}
+          placeHolder={'Mật khẩu'}
+          onChangeText={onChangePass}
+          secureTextEntry={true}
+          txtError={txtErrorPass}
+        />
+        <ButtonCustom
+          style={styles.button}
+          onPress={onPress}
+          title={'Đăng nhập'}
         />
       </View>
-    </Background>
+    </BackgroundBig>
   );
 };
 
@@ -44,7 +75,7 @@ const styles = StyleSheet.create({
     height: hp('40'),
   },
   loginTxt: {
-    fontFamily: 'roboto-slab-bold',
+    fontFamily: Fonts.Roboto_Stab_Bold,
     fontSize: wp('9'),
     color: mainColors.titleColor,
     marginTop: hp('25'),
@@ -52,16 +83,18 @@ const styles = StyleSheet.create({
   bottomBackground: {
     marginRight: 0,
   },
-  input: {
-    width: wp('80'),
-    marginTop: hp('5'),
-    borderWidth: 1,
-    borderColor: mainColors.titleColor,
-    borderRadius: wp('2'),
-    opacity: 0.5,
+  topSpace: {
+    marginTop: hp('4'),
   },
-  placeHolderStyle: {
-    color: mainColors.titleColor,
+  button: {
+    width: wp('85'),
+    paddingVertical: hp('2'),
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: hp('4'),
+  },
+  txtInButton: {
+    fontFamily: Fonts.Roboto_Slab_Regular,
+    color: '#FDFEFF',
   },
 });
-export default Login;
