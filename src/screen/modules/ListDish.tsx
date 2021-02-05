@@ -9,9 +9,18 @@ import {ButtonCustom} from './../../component';
 import {DummyListDish, mainColors} from '../../contants';
 export const ListDish = (props: any) => {
   const {style} = props;
+  const getColorByStatus = (status: string) => {
+    switch (status) {
+      case 'Hoàn thành':
+        return '#3E8A4F';
+      case 'Đang đợi':
+        return '#F3E205';
+      default:
+        return '#ED1F24';
+    }
+  };
   const renderItem = ({item}) => {
     const isComplete = item.status == 'Hoàn thành';
-    console.log('it', item);
     return (
       <View style={styles.viewRowHeader}>
         <Text style={styles.mealStyle}>{item?.meal}</Text>
@@ -21,7 +30,13 @@ export const ListDish = (props: any) => {
           <RenderTextRow data={item} />
         )}
         <Text style={styles.priceStyle}>{item?.price}</Text>
-        <Text style={styles.priceStyle}>Status</Text>
+        <Text
+          style={[
+            styles.statusStyle,
+            {backgroundColor: getColorByStatus(item?.status)},
+          ]}>
+          {item?.status}
+        </Text>
       </View>
     );
   };
@@ -37,6 +52,12 @@ export const ListDish = (props: any) => {
         showsVerticalScrollIndicator={false}
         data={DummyListDish}
         renderItem={renderItem}
+      />
+      <ButtonCustom
+        title={'Menu'}
+        style={styles.menuButton}
+        titleStyle={{fontSize: wp(4)}}
+        onPress={() => console.log('button')}
       />
       <ButtonCustom
         title={'Thanh toán'}
@@ -57,10 +78,12 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginVertical: hp('5'),
     justifyContent: 'flex-end',
+    overflow: 'hidden',
   },
   styleButton: {
     alignItems: 'center',
-    paddingVertical: hp('1'),
+    paddingVertical: hp('0.6'),
+    borderRadius: 0,
   },
   titleButtonStyle: {
     fontSize: wp('4.5'),
@@ -69,6 +92,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: wp('2'),
     paddingVertical: hp('1'),
+    alignItems: 'center',
   },
   titleHeader: {
     fontFamily: Fonts.Roboto_Stab_Bold,
@@ -79,7 +103,7 @@ const styles = StyleSheet.create({
   completeStyle: {
     color: mainColors.colorCompleteText,
     fontFamily: Fonts.Roboto_Slab_Regular,
-    fontSize: wp('2.3'),
+    fontSize: wp(3.8),
     textAlign: 'center',
     flex: 1,
   },
@@ -94,7 +118,7 @@ const styles = StyleSheet.create({
   mealStyle: {
     fontFamily: Fonts.Roboto_Slab_Regular,
     color: mainColors.titleColor,
-    fontSize: wp('2.3'),
+    fontSize: wp(3.4),
     flex: 1,
   },
   viewRow: {
@@ -106,23 +130,46 @@ const styles = StyleSheet.create({
   priceStyle: {
     fontFamily: Fonts.Roboto_Slab_Regular,
     color: mainColors.titleColor,
-    fontSize: wp('2.3'),
+    fontSize: wp(3.4),
     flex: 1,
     textAlign: 'center',
   },
   sllStyle: {
     fontFamily: Fonts.Roboto_Slab_Regular,
     color: mainColors.titleColor,
-    fontSize: wp('2.3'),
+    fontSize: wp(3.4),
+  },
+  statusStyle: {
+    fontFamily: Fonts.Roboto_Slab_Regular,
+    color: mainColors.whiteColor,
+    fontSize: wp(3.4),
+    flex: 1,
+    textAlign: 'center',
+    padding: wp(0.5),
+    borderRadius: wp(1),
+  },
+  menuButton: {
+    alignSelf: 'flex-end',
+    padding: wp(1.5),
+    position: 'absolute',
+    bottom: hp(2),
+    right: wp(2),
+    zIndex: 9999,
   },
 });
 const RenderTextRow = (props: any) => {
   const {data} = props;
   return (
     <View style={styles.viewRow}>
-      <Text style={styles.sllStyle}>3</Text>
-      <Text style={styles.sllStyle}>2</Text>
-      <Text style={styles.sllStyle}>3</Text>
+      <Text style={[styles.sllStyle, {color: '#F2DC10'}]}>{data?.sllWait}</Text>
+      <Text style={[styles.sllStyle, {color: mainColors.blackColor}]}>/</Text>
+      <Text style={[styles.sllStyle, {color: '#7AC144'}]}>
+        {data?.sllComplete}
+      </Text>
+      <Text style={[styles.sllStyle, {color: mainColors.blackColor}]}>/</Text>
+      <Text style={[styles.sllStyle, {color: '#EC2326'}]}>
+        {data?.sllCancel}
+      </Text>
     </View>
   );
 };

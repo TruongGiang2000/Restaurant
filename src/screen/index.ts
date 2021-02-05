@@ -1,3 +1,3 @@
 export * from './home';
-export * from './login';
-export * from './SplashScreen';
+export {default as Login} from './login';
+export {default as SplashScreen} from './SplashScreen';

@@ -8,13 +8,26 @@ import {
 import {SkypeIndicator} from 'react-native-indicators';
 import {mainColors} from '../contants/Colors';
 import {Fonts} from '../contants';
-export const SplashScreen = (props: any) => {
+import {connect} from 'react-redux';
+import {systems} from '../redux';
+import lodash from 'lodash';
+const SplashScreen = (props: any) => {
   const [syncMessage, setSyncMessage] = useState('');
   const [codePushSuccess, setCodePushSuccess] = useState(false);
+  const {
+    token,
+    navigation,
+    getListTable,
+    getListArea,
+    listTable,
+    listArea,
+  } = props;
   const loadingApp = () => {
     setCodePushSuccess(true);
   };
   useEffect(() => {
+    getListTable();
+    getListArea();
     CodePush.sync(
       {
         installMode: CodePush.InstallMode.IMMEDIATE,
@@ -52,18 +65,25 @@ export const SplashScreen = (props: any) => {
         break;
       case CodePush.SyncStatus.UP_TO_DATE:
       default:
-        setSyncMessage('ɚ 0.2');
+        setSyncMessage('ɚ 0.3');
         loadingApp();
         break;
     }
   };
   useEffect(() => {
-    if (codePushSuccess) {
+    if (
+      codePushSuccess &&
+      !lodash.isEmpty(listArea) &&
+      !lodash.isEmpty(listTable)
+    ) {
       setTimeout(() => {
+        if (token) {
+          return navigation.navigate('Home');
+        }
         props.navigation.navigate('Login');
       }, 3000);
     }
-  }, [codePushSuccess]);
+  }, [codePushSuccess, listTable, listArea]);
   return (
     <View style={styles.container}>
       <Image
@@ -101,3 +121,11 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.Roboto_Slab_Regular,
   },
 });
+const mapStateFromProps = (state: any) => {
+  return {
+    token: state.auth.token,
+    listTable: state.systems.listTable,
+    listArea: state.systems.listArea,
+  };
+};
+export default connect(mapStateFromProps, systems)(SplashScreen);

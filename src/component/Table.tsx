@@ -1,11 +1,12 @@
 import React from 'react';
-import {View, StyleSheet, Text, Image} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {SHADOWTABLE, TABLE} from '../assets';
 import {Fonts} from '../contants';
+import FastImage from 'react-native-fast-image';
 const Table = (props: any) => {
   const {codeTable, style, backgroundColor} = props;
   return (
@@ -15,9 +16,17 @@ const Table = (props: any) => {
         styles.containerTable,
         {backgroundColor: backgroundColor},
       ]}>
-      <Image resizeMode={'contain'} style={styles.image} source={SHADOWTABLE} />
+      <FastImage
+        resizeMode={'contain'}
+        style={styles.image}
+        source={SHADOWTABLE}
+      />
       <Text style={styles.titleTable}>{codeTable}</Text>
-      <Image style={styles.tableImage} source={TABLE} resizeMode={'cover'} />
+      <FastImage
+        style={styles.tableImage}
+        source={TABLE}
+        resizeMode={'cover'}
+      />
     </View>
   );
 };

@@ -1,43 +1,64 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, Text, Pressable} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, StyleSheet, Image} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {BackgroundBig, ButtonCustom} from '../../component';
-import {mainColors} from '../../contants/Colors';
 import TextInputCustom from '../../component/TextInputCustom';
 import {Fonts} from '../../contants';
-export const Login = (props: any) => {
+import {ICONMAIN} from '../../assets';
+import {connect} from 'react-redux';
+import {auth} from '../../redux';
+import {actionMain} from '../../util';
+const Login = (props: any) => {
   const [userName, setUserName] = useState('');
   const [pass, setPass] = useState('');
   const [txtErrorUser, setTxtErrorUser] = useState(null);
   const [txtErrorPass, setTxtErrorPass] = useState(null);
+  const {navigation, token, signIn} = props;
   const onChangeUser = (value: any) => {
+    if (!!value) {
+      setTxtErrorUser('');
+    } else {
+      setTxtErrorUser('Tài khoản không được để trống');
+    }
     setUserName(value);
   };
   const onChangePass = (value: any) => {
+    if (!!value) {
+      setTxtErrorPass('');
+    } else {
+      setTxtErrorPass('Mật khẩu không được để trống');
+    }
     setPass(value);
   };
   const onPress = () => {
-    // if (userName.trim() == 'MrCu' && pass.trim() == 'MrCu') {
-    props.navigation.navigate('Home');
-    // }
-    // if (userName != 'MrCu') {
-    //   setTxtErrorUser('Tài khoản không đúng!');
-    // } else {
-    //   setTxtErrorUser(null);
-    // }
-    // if (pass != 'MrCu') {
-    //   setTxtErrorPass('Mật khẩu không đúng!');
-    // } else {
-    //   setTxtErrorPass(null);
-    // }
+    if (!userName) {
+      return setTxtErrorUser('Tài khoản không được để trống');
+    }
+    if (!pass) {
+      return setTxtErrorPass('Mật khẩu không được để trống');
+    }
+    const dataLogin = {
+      username: userName,
+      password: pass,
+    };
+    console.log('loading');
+    actionMain.loading(true);
+    signIn(dataLogin);
   };
+  useEffect(() => {
+    !!token && navigation.navigate('Home');
+  }, [token]);
   return (
     <BackgroundBig>
       <View style={styles.MainContainer}>
-        <Text style={styles.loginTxt}>Đăng nhập</Text>
+        <Image
+          source={ICONMAIN}
+          style={styles.iconMain}
+          resizeMode={'contain'}
+        />
         <TextInputCustom
           style={styles.topSpace}
           placeHolder={'Tài khoản'}
@@ -70,31 +91,29 @@ const styles = StyleSheet.create({
     width: wp('70'),
     height: hp('40'),
   },
-  multipleFood: {
-    width: wp('55'),
-    height: hp('40'),
-  },
-  loginTxt: {
-    fontFamily: Fonts.Roboto_Stab_Bold,
-    fontSize: wp('9'),
-    color: mainColors.titleColor,
-    marginTop: hp('25'),
-  },
-  bottomBackground: {
-    marginRight: 0,
-  },
   topSpace: {
     marginTop: hp('4'),
   },
   button: {
-    width: wp('85'),
-    paddingVertical: hp('2'),
+    width: wp('80'),
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: hp('4'),
+    height: hp('6'),
   },
   txtInButton: {
     fontFamily: Fonts.Roboto_Slab_Regular,
     color: '#FDFEFF',
   },
+  iconMain: {
+    width: wp(40),
+    height: wp(40),
+    marginTop: hp(8),
+  },
 });
+const mapStateFromProps = (state: any) => {
+  return {
+    token: state.auth.token,
+  };
+};
+export default connect(mapStateFromProps, auth)(Login);

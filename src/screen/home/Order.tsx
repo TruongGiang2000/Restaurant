@@ -7,30 +7,25 @@ import {
 import Unit from '../../component/Unit';
 import BackgroundSmall from '../../component/BackgroundSmall';
 import {mainColors, Fonts} from '../../contants';
+import {connect} from 'react-redux';
 const Order = (props: any) => {
   const [active, setActive] = useState({});
-  const data = [
-    {code: '01'},
-    {code: '02'},
-    {code: '03'},
-    {code: '04'},
-    {code: '05'},
-    {code: '06'},
-    {code: '07'},
-  ];
+  const {listArea} = props;
   const onPress = (item: any) => () => {
-    if (Object.values(active).some((it) => it === item.code)) {
-      const filterItem = Object.values(active).filter((it) => it != item.code);
+    if (Object.values(active).some((it) => it === item.areaName)) {
+      const filterItem = Object.values(active).filter(
+        (it) => it != item.areaName,
+      );
       return setActive(filterItem);
     }
-    setActive({...active, [item.code]: item.code});
+    setActive({...active, [item.areaName]: item.areaName});
   };
   const renderItem = ({item, index}) => {
-    let showTable = Object.values(active).some((it) => it === item.code);
+    const showTable = Object.values(active).some((it) => it === item.areaName);
     return (
       <Unit
-        unit={'Lầu'}
-        codeUnit={item.code}
+        unit={item.areaUnit}
+        codeUnit={item.areaName}
         onPress={onPress(item)}
         active={showTable}
         style={index == 0 ? undefined : {marginTop: hp('3')}}
@@ -41,7 +36,7 @@ const Order = (props: any) => {
   return (
     <BackgroundSmall isScroll={false} style={styles.MainContainer}>
       <FlatList
-        data={data}
+        data={listArea}
         renderItem={renderItem}
         contentContainerStyle={{marginHorizontal: wp('2')}}
       />
@@ -117,4 +112,9 @@ const styles = StyleSheet.create({
     marginLeft: wp('1'),
   },
 });
-export default Order;
+const mapStateFromProps = (state: any) => {
+  return {
+    listArea: state.systems.listArea,
+  };
+};
+export default connect(mapStateFromProps, null)(Order);

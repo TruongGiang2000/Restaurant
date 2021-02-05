@@ -96,3 +96,13 @@ export const DummyListDish = [
     status: 'Đã huỷ',
   },
 ];
+export const DataTable = [
+  [{key: 'Bàn 1'}, {key: 'Bàn 2'}, {key: 'Bàn 3'}],
+  [{key: 'Bàn 4'}, {key: 'Bàn 5'}],
+  [{key: 'Bàn 7'}, {key: 'Bàn 8'}, {key: 'Bàn 9'}],
+  [{key: 'Bàn 10'}, {key: 'Bàn 11'}],
+  [{key: 'Bàn 7'}, {key: 'Bàn 8'}, {key: 'Bàn 9'}],
+  [{key: 'Bàn 10'}, {key: 'Bàn 11'}],
+  [{key: 'Bàn 7'}, {key: 'Bàn 8'}, {key: 'Bàn 9'}],
+  [{key: 'Bàn 10'}, {key: 'Bàn 11'}],
+];

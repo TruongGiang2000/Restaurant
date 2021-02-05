@@ -5,15 +5,12 @@ import React from 'react';
 import {AppRegistry, View, StatusBar, LogBox} from 'react-native';
 import App from './src/route/index';
 import {name as appName} from './app.json';
+import {Provider} from 'react-redux';
+import configureStore from './src/redux/store';
 const app = () => (
-  <View style={{flex: 1}}>
-    <StatusBar
-      backgroundColor={'#ffffff'}
-      barStyle={'dark-content'}
-      animated={true}
-    />
+  <Provider store={configureStore}>
     <App />
-  </View>
+  </Provider>
 );
 
 AppRegistry.registerComponent(appName, () => app);

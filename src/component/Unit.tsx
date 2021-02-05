@@ -1,12 +1,5 @@
-import React, {useState, useRef} from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  ImageBackground,
-  Pressable,
-  FlatList,
-} from 'react-native';
+import React, {useRef, useState, useEffect} from 'react';
+import {View, StyleSheet, Text, FlatList} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -15,23 +8,18 @@ import {mainColors, Fonts} from '../contants';
 import Table from '../component/Table';
 import {UNIT, STT, UNITACTIVE} from '../assets';
 import * as Animatable from 'react-native-animatable';
+import Ripple from 'react-native-material-ripple';
+import FastImage from 'react-native-fast-image';
+import lodash from 'lodash';
+import {connect} from 'react-redux';
 const Unit = (props: any) => {
-  const data = [
-    [{key: 'Bàn 1'}, {key: 'Bàn 2'}, {key: 'Bàn 3'}],
-    [{key: 'Bàn 4'}, {key: 'Bàn 5'}],
-    [{key: 'Bàn 7'}, {key: 'Bàn 8'}, {key: 'Bàn 9'}],
-    [{key: 'Bàn 10'}, {key: 'Bàn 11'}],
-    [{key: 'Bàn 7'}, {key: 'Bàn 8'}, {key: 'Bàn 9'}],
-    [{key: 'Bàn 10'}, {key: 'Bàn 11'}],
-    [{key: 'Bàn 7'}, {key: 'Bàn 8'}, {key: 'Bàn 9'}],
-    [{key: 'Bàn 10'}, {key: 'Bàn 11'}],
-  ];
+  const {unit, codeUnit, onPress, showTable, style, listTable} = props;
   const renderTable = ({item, index}) => {
     let isLast = index == 2;
     return (
       <Table
         style={isLast ? undefined : styles.tableItem}
-        codeTable={item.key}
+        codeTable={item.tableName}
       />
     );
   };
@@ -48,32 +36,33 @@ const Unit = (props: any) => {
       </View>
     );
   };
-  const {unit, codeUnit, onPress, showTable, style} = props;
   return (
     <>
       <View style={[style, styles.MainContainer]}>
-        <Pressable onPress={onPress}>
-          <ImageBackground
+        <Ripple onPress={onPress} style={styles.viewTitle}>
+          <FastImage
             source={showTable ? UNITACTIVE : UNIT}
             resizeMode={'contain'}
-            style={styles.viewTitle}>
-            <Text style={styles.title}>{unit}</Text>
-          </ImageBackground>
-        </Pressable>
-        <Pressable style={{flex: 1}} onPress={onPress}>
-          <ImageBackground
-            source={STT}
-            resizeMode={'center'}
-            style={styles.viewUnit}>
+            style={StyleSheet.absoluteFillObject}
+          />
+          <Text style={styles.title}>{unit}</Text>
+        </Ripple>
+        <View style={{flex: 1}}>
+          <View style={styles.viewUnit}>
+            <FastImage
+              source={STT}
+              resizeMode={'contain'}
+              style={StyleSheet.absoluteFillObject}
+            />
             <Text style={styles.unit}>{codeUnit}</Text>
-          </ImageBackground>
+          </View>
           <View style={styles.line} />
-        </Pressable>
+        </View>
       </View>
-      <Animatable.View animation={showTable ? 'slideInUp' : 'slideOutDown'}>
+      <Animatable.View duration={400} animation={'fadeInUp'} easing={'linear'}>
         {showTable && (
           <FlatList
-            data={data}
+            data={listTable}
             renderItem={renderItem}
             style={styles.flatList}
           />
@@ -134,4 +123,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'powderblue',
   },
 });
-export default Unit;
+const mapStateFromProps = (state: any) => {
+  return {
+    listTable: state.systems.listTable,
+  };
+};
+export default connect(mapStateFromProps, null)(Unit);

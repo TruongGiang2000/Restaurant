@@ -18,6 +18,7 @@ const BackgroundSmall = (props: any) => {
 const styles = StyleSheet.create({
   MainContainer: {
     height: hp('100'),
+    zIndex: -99,
   },
 });
 export default BackgroundSmall;
