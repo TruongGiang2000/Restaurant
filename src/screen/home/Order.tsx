@@ -1,16 +1,16 @@
 import React, {useState, useRef} from 'react';
-import {View, StyleSheet, Text, FlatList, Animated} from 'react-native';
+import {View, StyleSheet, Text, FlatList} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import Unit from '../../component/Unit';
-import BackgroundSmall from '../../component/BackgroundSmall';
-import {mainColors, Fonts} from '../../contants';
+import {BackgroundSmall} from '../../component';
+import {mainColors, Fonts, DataStatus} from '../../contants';
 import {connect} from 'react-redux';
 const Order = (props: any) => {
   const [active, setActive] = useState({});
-  const {listArea} = props;
+  const {listArea, navigation} = props;
   const onPress = (item: any) => () => {
     if (Object.values(active).some((it) => it === item.areaName)) {
       const filterItem = Object.values(active).filter(
@@ -30,6 +30,8 @@ const Order = (props: any) => {
         active={showTable}
         style={index == 0 ? undefined : {marginTop: hp('3')}}
         showTable={showTable}
+        isShowListDish={index == 0}
+        navigation={navigation}
       />
     );
   };
@@ -40,47 +42,17 @@ const Order = (props: any) => {
         renderItem={renderItem}
         contentContainerStyle={{marginHorizontal: wp('2')}}
       />
-      <View style={styles.row}>
-        <View>
-          <View style={styles.row}>
-            <View
-              style={[styles.noteFood, {backgroundColor: mainColors.waitFood}]}
-            />
-            <Text style={styles.txtNote}>Đang đợi món</Text>
-          </View>
-          <View style={[styles.row, {marginTop: hp('1')}]}>
-            <View
-              style={[
-                styles.noteFood,
-                {backgroundColor: mainColors.completeColor},
-              ]}
-            />
-            <Text style={styles.txtNote}>Đã đủ món</Text>
-          </View>
-        </View>
-        <View>
-          <View style={styles.row}>
-            <View
-              style={[
-                styles.noteFood,
-                {backgroundColor: mainColors.whiteColor, marginLeft: wp('2')},
-              ]}
-            />
-            <Text style={styles.txtNote}>Có người ngồi</Text>
-          </View>
-          <View style={[styles.row, {marginTop: hp('1')}]}>
-            <View
-              style={[
-                styles.noteFood,
-                {
-                  backgroundColor: mainColors.disableColor,
-                  marginLeft: wp('2'),
-                },
-              ]}
-            />
-            <Text style={styles.txtNote}>Không có người ngồi</Text>
-          </View>
-        </View>
+      <View style={[styles.row, {flexWrap: 'wrap', width: '80%'}]}>
+        {DataStatus?.map((status) => {
+          return (
+            <View style={[styles.row, {width: wp(35)}]}>
+              <View
+                style={[styles.noteFood, {backgroundColor: status.color}]}
+              />
+              <Text>{status.title}</Text>
+            </View>
+          );
+        })}
       </View>
     </BackgroundSmall>
   );
@@ -99,16 +71,17 @@ const styles = StyleSheet.create({
     marginVertical: hp('1'),
   },
   noteFood: {
-    width: wp('7'),
-    height: hp('2.5'),
+    width: wp('6.5'),
+    height: hp('2'),
     borderRadius: wp('1'),
     borderWidth: 2,
     borderColor: '#333333',
+    marginRight: wp(1.5),
   },
   txtNote: {
     fontFamily: Fonts.Roboto_Slab_Regular,
     color: mainColors.blackColor,
-    fontSize: wp('3'),
+    fontSize: wp('2.5'),
     marginLeft: wp('1'),
   },
 });

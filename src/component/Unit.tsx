@@ -1,19 +1,28 @@
-import React, {useRef, useState, useEffect} from 'react';
-import {View, StyleSheet, Text, FlatList} from 'react-native';
+import React from 'react';
+import {View, StyleSheet, Text, FlatList, ScrollView} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {mainColors, Fonts} from '../contants';
+import {mainColors, Fonts, DataTable} from '../contants';
 import Table from '../component/Table';
 import {UNIT, STT, UNITACTIVE} from '../assets';
 import * as Animatable from 'react-native-animatable';
 import Ripple from 'react-native-material-ripple';
 import FastImage from 'react-native-fast-image';
-import lodash from 'lodash';
 import {connect} from 'react-redux';
+import {ListDish} from '../screen/modules';
 const Unit = (props: any) => {
-  const {unit, codeUnit, onPress, showTable, style, listTable} = props;
+  const {
+    unit,
+    codeUnit,
+    onPress,
+    showTable,
+    style,
+    listTable,
+    isShowListDish,
+    navigation,
+  } = props;
   const renderTable = ({item, index}) => {
     let isLast = index == 2;
     return (
@@ -61,11 +70,21 @@ const Unit = (props: any) => {
       </View>
       <Animatable.View duration={400} animation={'fadeInUp'} easing={'linear'}>
         {showTable && (
-          <FlatList
-            data={listTable}
-            renderItem={renderItem}
-            style={styles.flatList}
-          />
+          <>
+            <FlatList
+              data={listTable}
+              renderItem={renderItem}
+              style={styles.flatList}
+            />
+            {isShowListDish && (
+              <Animatable.View
+                animation={'slideInUp'}
+                duration={400}
+                style={{}}>
+                <ListDish navigation={navigation} />
+              </Animatable.View>
+            )}
+          </>
         )}
       </Animatable.View>
     </>

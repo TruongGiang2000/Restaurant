@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-import {Login, HomeRoute, SplashScreen} from '../screen';
+import {Login, HomeRoute, SplashScreen, MyTabs} from '../screen';
 import {ListDish} from '../screen/modules';
 import {View, StatusBar} from 'react-native';
 import {connect} from 'react-redux';
@@ -20,6 +20,7 @@ const mainRoute = () => {
         {!token && <Stack.Screen name="Login" component={Login} />}
         <Stack.Screen name="Home" component={HomeRoute} />
         <Stack.Screen name="ListDish" component={ListDish} />
+        <Stack.Screen name="MyTabs" component={MyTabs} />
       </Stack.Navigator>
     </NavigationContainer>
   );

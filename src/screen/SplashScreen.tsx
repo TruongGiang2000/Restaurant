@@ -11,6 +11,7 @@ import {Fonts} from '../contants';
 import {connect} from 'react-redux';
 import {systems} from '../redux';
 import lodash from 'lodash';
+import {LOGO} from '../assets';
 const SplashScreen = (props: any) => {
   const [syncMessage, setSyncMessage] = useState('');
   const [codePushSuccess, setCodePushSuccess] = useState(false);
@@ -65,7 +66,7 @@ const SplashScreen = (props: any) => {
         break;
       case CodePush.SyncStatus.UP_TO_DATE:
       default:
-        setSyncMessage('ɚ 0.3');
+        setSyncMessage('ɚ 0.4');
         loadingApp();
         break;
     }
@@ -86,11 +87,7 @@ const SplashScreen = (props: any) => {
   }, [codePushSuccess, listTable, listArea]);
   return (
     <View style={styles.container}>
-      <Image
-        source={require('../assets/images/Logo.png')}
-        resizeMode={'contain'}
-        style={styles.image}
-      />
+      <Image source={LOGO} resizeMode={'contain'} style={styles.image} />
       <View style={{height: hp('5')}}>
         <SkypeIndicator color={mainColors.mainColor} size={wp('10')} />
       </View>

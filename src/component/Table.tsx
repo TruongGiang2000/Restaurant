@@ -7,10 +7,12 @@ import {
 import {SHADOWTABLE, TABLE} from '../assets';
 import {Fonts} from '../contants';
 import FastImage from 'react-native-fast-image';
+import Ripple from 'react-native-material-ripple';
 const Table = (props: any) => {
-  const {codeTable, style, backgroundColor} = props;
+  const {codeTable, style, backgroundColor, onPress} = props;
   return (
-    <View
+    <Ripple
+      onPress={onPress}
       style={[
         style,
         styles.containerTable,
@@ -27,7 +29,7 @@ const Table = (props: any) => {
         source={TABLE}
         resizeMode={'cover'}
       />
-    </View>
+    </Ripple>
   );
 };
 

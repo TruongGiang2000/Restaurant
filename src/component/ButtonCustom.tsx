@@ -9,17 +9,10 @@ import Ripple from 'react-native-material-ripple';
 import * as Annimatable from 'react-native-animatable';
 export const ButtonCustom = (props: any) => {
   const {title, onPress, style, titleStyle} = props;
-  const refAnimatable = useRef<any>();
-  const _onPress = async () => {
-    await refAnimatable.current.tada();
-    onPress();
-  };
   return (
-    <Annimatable.View ref={refAnimatable}>
-      <Ripple onPressIn={_onPress} style={[styles.MainContainer, style]}>
-        <Text style={[styles.title, titleStyle]}>{title}</Text>
-      </Ripple>
-    </Annimatable.View>
+    <Ripple onPressIn={onPress} style={[styles.MainContainer, style]}>
+      <Text style={[styles.title, titleStyle]}>{title}</Text>
+    </Ripple>
   );
 };
 

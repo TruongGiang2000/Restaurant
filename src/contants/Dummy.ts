@@ -106,3 +106,322 @@ export const DataTable = [
   [{key: 'Bàn 7'}, {key: 'Bàn 8'}, {key: 'Bàn 9'}],
   [{key: 'Bàn 10'}, {key: 'Bàn 11'}],
 ];
+export const MenuDummy = [
+  {
+    key: 'Gần đây',
+    data: [
+      {
+        name: 'Hambegur bò gần đây',
+        price: '100000',
+        status: 'Còn',
+        img:
+          'https://mcdonalds.vn/uploads/2018/food/burgers/mcchicken-deluxe.png',
+      },
+      {
+        name: 'Gà chiên nước mắm',
+        price: '120000',
+        status: 'Còn',
+        img:
+          'https://sieungon.com/wp-content/uploads/2017/11/mon-canh-ga-chien-nuoc-mam.jpg',
+      },
+      {
+        name: 'Gỏi xoài tôm khô',
+        price: '70000',
+        status: 'Còn',
+        img:
+          'https://img-global.cpcdn.com/recipes/2436699_508d77f785dc3e98/1200x630cq70/photo.jpg',
+      },
+      {
+        name: 'Gỏi chân gà rút xương',
+        price: '65000',
+        status: 'Còn',
+        img:
+          'https://pastaxi-manager.onepas.vn/content/uploads/articles/ngocanh/Blog/cach-lam-goi-chan-ga-rut-xuong/cach-lam-goi-chan-ga-rut-xuong-1.jpg',
+      },
+      {
+        name: 'Súp gà xé',
+        price: '30000',
+        status: 'Còn',
+        img:
+          'https://image-us.eva.vn/upload/2-2019/images/2019-04-02/5-cach-nau-sup-ga-ngon-bo-duong-an-mai-khong-chan-sup-ga-3-1554197219-790-width573height494.jpg',
+      },
+    ],
+  },
+  {
+    key: 'Đặc biệt',
+    data: [
+      {
+        name: 'Hambegur bò đặc biệt',
+        price: '100000',
+        status: 'Còn',
+        img:
+          'hhttps://mcdonalds.vn/uploads/2018/food/burgers/mcchicken-deluxe.png',
+      },
+      {
+        name: 'Gà chiên nước mắm',
+        price: '120000',
+        status: 'Còn',
+        img:
+          'https://sieungon.com/wp-content/uploads/2017/11/mon-canh-ga-chien-nuoc-mam.jpg',
+      },
+      {
+        name: 'Gỏi xoài tôm khô',
+        price: '70000',
+        status: 'Còn',
+        img:
+          'https://img-global.cpcdn.com/recipes/2436699_508d77f785dc3e98/1200x630cq70/photo.jpg',
+      },
+      {
+        name: 'Gỏi chân gà rút xương',
+        price: '65000',
+        status: 'Còn',
+        img:
+          'https://pastaxi-manager.onepas.vn/content/uploads/articles/ngocanh/Blog/cach-lam-goi-chan-ga-rut-xuong/cach-lam-goi-chan-ga-rut-xuong-1.jpg',
+      },
+      {
+        name: 'Súp gà xé',
+        price: '30000',
+        status: 'Còn',
+        img:
+          'https://image-us.eva.vn/upload/2-2019/images/2019-04-02/5-cach-nau-sup-ga-ngon-bo-duong-an-mai-khong-chan-sup-ga-3-1554197219-790-width573height494.jpg',
+      },
+    ],
+    'Đặc biệt': [
+      {
+        name: 'Hambegur bò đặc biệt',
+        price: '100000',
+        status: 'Còn',
+        img:
+          'https://mcdonalds.vn/uploads/2018/food/burgers/mcchicken-deluxe.png',
+      },
+      {
+        name: 'Gà chiên nước mắm',
+        price: '120000',
+        status: 'Còn',
+        img:
+          'https://sieungon.com/wp-content/uploads/2017/11/mon-canh-ga-chien-nuoc-mam.jpg',
+      },
+      {
+        name: 'Gỏi xoài tôm khô',
+        price: '70000',
+        status: 'Còn',
+        img:
+          'https://img-global.cpcdn.com/recipes/2436699_508d77f785dc3e98/1200x630cq70/photo.jpg',
+      },
+      {
+        name: 'Gỏi chân gà rút xương',
+        price: '65000',
+        status: 'Còn',
+        img:
+          'https://pastaxi-manager.onepas.vn/content/uploads/articles/ngocanh/Blog/cach-lam-goi-chan-ga-rut-xuong/cach-lam-goi-chan-ga-rut-xuong-1.jpg',
+      },
+      {
+        name: 'Súp gà xé',
+        price: '30000',
+        status: 'Còn',
+        img:
+          'https://image-us.eva.vn/upload/2-2019/images/2019-04-02/5-cach-nau-sup-ga-ngon-bo-duong-an-mai-khong-chan-sup-ga-3-1554197219-790-width573height494.jpg',
+      },
+    ],
+  },
+  {
+    key: 'Món xào',
+    data: [
+      {
+        name: 'Hambegur bò món xào',
+        price: '100000',
+        status: 'Còn',
+        img:
+          'https://mcdonalds.vn/uploads/2018/food/burgers/mcchicken-deluxe.png',
+      },
+      {
+        name: 'Gà chiên nước mắm',
+        price: '120000',
+        status: 'Còn',
+        img:
+          'https://sieungon.com/wp-content/uploads/2017/11/mon-canh-ga-chien-nuoc-mam.jpg',
+      },
+      {
+        name: 'Gỏi xoài tôm khô',
+        price: '70000',
+        status: 'Còn',
+        img:
+          'https://img-global.cpcdn.com/recipes/2436699_508d77f785dc3e98/1200x630cq70/photo.jpg',
+      },
+      {
+        name: 'Gỏi chân gà rút xương',
+        price: '65000',
+        status: 'Còn',
+        img:
+          'https://pastaxi-manager.onepas.vn/content/uploads/articles/ngocanh/Blog/cach-lam-goi-chan-ga-rut-xuong/cach-lam-goi-chan-ga-rut-xuong-1.jpg',
+      },
+      {
+        name: 'Súp gà xé',
+        price: '30000',
+        status: 'Còn',
+        img:
+          'https://image-us.eva.vn/upload/2-2019/images/2019-04-02/5-cach-nau-sup-ga-ngon-bo-duong-an-mai-khong-chan-sup-ga-3-1554197219-790-width573height494.jpg',
+      },
+    ],
+  },
+  {
+    key: 'Nước uống',
+    data: [
+      {
+        name: 'Hambegur bò nước uống',
+        price: '100000',
+        status: 'Còn',
+        img:
+          'https://mcdonalds.vn/uploads/2018/food/burgers/mcchicken-deluxe.png',
+      },
+      {
+        name: 'Gà chiên nước mắm',
+        price: '120000',
+        status: 'Còn',
+        img:
+          'https://sieungon.com/wp-content/uploads/2017/11/mon-canh-ga-chien-nuoc-mam.jpg',
+      },
+      {
+        name: 'Gỏi xoài tôm khô',
+        price: '70000',
+        status: 'Còn',
+        img:
+          'https://img-global.cpcdn.com/recipes/2436699_508d77f785dc3e98/1200x630cq70/photo.jpg',
+      },
+      {
+        name: 'Gỏi chân gà rút xương',
+        price: '65000',
+        status: 'Còn',
+        img:
+          'https://pastaxi-manager.onepas.vn/content/uploads/articles/ngocanh/Blog/cach-lam-goi-chan-ga-rut-xuong/cach-lam-goi-chan-ga-rut-xuong-1.jpg',
+      },
+      {
+        name: 'Súp gà xé',
+        price: '30000',
+        status: 'Còn',
+        img:
+          'https://image-us.eva.vn/upload/2-2019/images/2019-04-02/5-cach-nau-sup-ga-ngon-bo-duong-an-mai-khong-chan-sup-ga-3-1554197219-790-width573height494.jpg',
+      },
+    ],
+  },
+  {
+    key: 'Món nướng',
+    data: [
+      {
+        name: 'Hambegur bò món nướng',
+        price: '100000',
+        status: 'Còn',
+        img:
+          'https://mcdonalds.vn/uploads/2018/food/burgers/mcchicken-deluxe.png',
+      },
+      {
+        name: 'Gà chiên nước mắm',
+        price: '120000',
+        status: 'Còn',
+        img:
+          'https://sieungon.com/wp-content/uploads/2017/11/mon-canh-ga-chien-nuoc-mam.jpg',
+      },
+      {
+        name: 'Gỏi xoài tôm khô',
+        price: '70000',
+        status: 'Còn',
+        img:
+          'https://img-global.cpcdn.com/recipes/2436699_508d77f785dc3e98/1200x630cq70/photo.jpg',
+      },
+      {
+        name: 'Gỏi chân gà rút xương',
+        price: '65000',
+        status: 'Còn',
+        img:
+          'https://pastaxi-manager.onepas.vn/content/uploads/articles/ngocanh/Blog/cach-lam-goi-chan-ga-rut-xuong/cach-lam-goi-chan-ga-rut-xuong-1.jpg',
+      },
+      {
+        name: 'Súp gà xé',
+        price: '30000',
+        status: 'Còn',
+        img:
+          'https://image-us.eva.vn/upload/2-2019/images/2019-04-02/5-cach-nau-sup-ga-ngon-bo-duong-an-mai-khong-chan-sup-ga-3-1554197219-790-width573height494.jpg',
+      },
+    ],
+  },
+  {
+    key: 'Món lẩu',
+    data: [
+      {
+        name: 'Hambegur bò món lẩu',
+        price: '100000',
+        status: 'Còn',
+        img:
+          'https://mcdonalds.vn/uploads/2018/food/burgers/mcchicken-deluxe.png',
+      },
+      {
+        name: 'Gà chiên nước mắm',
+        price: '120000',
+        status: 'Còn',
+        img:
+          'https://sieungon.com/wp-content/uploads/2017/11/mon-canh-ga-chien-nuoc-mam.jpg',
+      },
+      {
+        name: 'Gỏi xoài tôm khô',
+        price: '70000',
+        status: 'Còn',
+        img:
+          'https://img-global.cpcdn.com/recipes/2436699_508d77f785dc3e98/1200x630cq70/photo.jpg',
+      },
+      {
+        name: 'Gỏi chân gà rút xương',
+        price: '65000',
+        status: 'Còn',
+        img:
+          'https://pastaxi-manager.onepas.vn/content/uploads/articles/ngocanh/Blog/cach-lam-goi-chan-ga-rut-xuong/cach-lam-goi-chan-ga-rut-xuong-1.jpg',
+      },
+      {
+        name: 'Súp gà xé',
+        price: '30000',
+        status: 'Còn',
+        img:
+          'https://image-us.eva.vn/upload/2-2019/images/2019-04-02/5-cach-nau-sup-ga-ngon-bo-duong-an-mai-khong-chan-sup-ga-3-1554197219-790-width573height494.jpg',
+      },
+    ],
+  },
+  {
+    key: 'Món chiên',
+    data: [
+      {
+        name: 'Hambegur bò món chiên',
+        price: '100000',
+        status: 'Còn',
+        img:
+          'https://mcdonalds.vn/uploads/2018/food/burgers/mcchicken-deluxe.png',
+      },
+      {
+        name: 'Gà chiên nước mắm',
+        price: '120000',
+        status: 'Còn',
+        img:
+          'https://sieungon.com/wp-content/uploads/2017/11/mon-canh-ga-chien-nuoc-mam.jpg',
+      },
+      {
+        name: 'Gỏi xoài tôm khô',
+        price: '70000',
+        status: 'Còn',
+        img:
+          'https://img-global.cpcdn.com/recipes/2436699_508d77f785dc3e98/1200x630cq70/photo.jpg',
+      },
+      {
+        name: 'Gỏi chân gà rút xương',
+        price: '65000',
+        status: 'Còn',
+        img:
+          'https://pastaxi-manager.onepas.vn/content/uploads/articles/ngocanh/Blog/cach-lam-goi-chan-ga-rut-xuong/cach-lam-goi-chan-ga-rut-xuong-1.jpg',
+      },
+      {
+        name: 'Súp gà xé',
+        price: '30000',
+        status: 'Còn',
+        img:
+          'https://image-us.eva.vn/upload/2-2019/images/2019-04-02/5-cach-nau-sup-ga-ngon-bo-duong-an-mai-khong-chan-sup-ga-3-1554197219-790-width573height494.jpg',
+      },
+    ],
+  },
+];

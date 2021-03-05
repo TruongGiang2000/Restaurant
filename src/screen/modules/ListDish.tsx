@@ -8,7 +8,7 @@ import {Fonts} from '../../contants';
 import {ButtonCustom} from './../../component';
 import {DummyListDish, mainColors} from '../../contants';
 export const ListDish = (props: any) => {
-  const {style} = props;
+  const {style, navigation} = props;
   const getColorByStatus = (status: string) => {
     switch (status) {
       case 'Hoàn thành':
@@ -57,7 +57,7 @@ export const ListDish = (props: any) => {
         title={'Menu'}
         style={styles.menuButton}
         titleStyle={{fontSize: wp(4)}}
-        onPress={() => console.log('button')}
+        onPress={() => navigation.navigate('MyTabs')}
       />
       <ButtonCustom
         title={'Thanh toán'}
@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
     marginVertical: hp('5'),
     justifyContent: 'flex-end',
     overflow: 'hidden',
+    backgroundColor: mainColors.whiteColor,
   },
   styleButton: {
     alignItems: 'center',
@@ -152,7 +153,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     padding: wp(1.5),
     position: 'absolute',
-    bottom: hp(2),
+    bottom: hp(6),
     right: wp(2),
     zIndex: 9999,
   },

@@ -5,7 +5,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {BACKGROUNDSMALL} from '../assets';
-const BackgroundSmall = (props: any) => {
+export const BackgroundSmall = (props: any) => {
   const {children, style} = props;
   return (
     <ImageBackground
@@ -21,4 +21,3 @@ const styles = StyleSheet.create({
     zIndex: -99,
   },
 });
-export default BackgroundSmall;
