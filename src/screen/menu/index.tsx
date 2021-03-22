@@ -12,6 +12,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {useSelector} from 'react-redux';
 const Tab = createMaterialTopTabNavigator();
 const Tabs = ({state, descriptors, navigation, position}) => {
   const renderItem = ({item, index}) => {
@@ -51,6 +52,9 @@ const Tabs = ({state, descriptors, navigation, position}) => {
   );
 };
 export const MyTabs = (props: any) => {
+  const { menu} = useSelector((state) => ({
+    menu: state?.systems?.menu,
+  }));
   return (
     <>
       <View style={styles.header}>
@@ -76,7 +80,7 @@ export const MyTabs = (props: any) => {
         lazyPreloadDistance={2}
         swipeEnabled={false}
         tabBar={Tabs}>
-        {getScreenByList(Tab, MenuDummy, ListMenu, {})}
+        {getScreenByList(Tab, menu, ListMenu, {})}
       </Tab.Navigator>
     </>
   );

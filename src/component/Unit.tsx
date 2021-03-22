@@ -1,5 +1,12 @@
-import React from 'react';
-import {View, StyleSheet, Text, FlatList, ScrollView} from 'react-native';
+import React, {useState} from 'react';
+import {
+  View,
+  StyleSheet,
+  Text,
+  FlatList,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -12,6 +19,8 @@ import Ripple from 'react-native-material-ripple';
 import FastImage from 'react-native-fast-image';
 import {connect} from 'react-redux';
 import {ListDish} from '../screen/modules';
+import lodash from 'lodash';
+import {} from 'react-native-gesture-handler';
 const Unit = (props: any) => {
   const {
     unit,
@@ -19,16 +28,32 @@ const Unit = (props: any) => {
     onPress,
     showTable,
     style,
-    listTable,
-    isShowListDish,
     navigation,
+    listTables,
   } = props;
+  const [activeTable, setActiveTable] = useState({});
+  const onPressTable = (item: any) => () => {
+    if (Object.values(activeTable).some((it) => it === item._id)) {
+      const filterItem = Object.values(activeTable).filter(
+        (it) => it != item._id,
+      );
+      return setActiveTable(filterItem);
+    }
+    setActiveTable({[item._id]: item._id});
+  };
   const renderTable = ({item, index}) => {
     let isLast = index == 2;
+    const isActiveTable = Object.values(activeTable).some(
+      (it) => it === item._id,
+    );
     return (
       <Table
-        style={isLast ? undefined : styles.tableItem}
+        style={[
+          isLast ? undefined : styles.tableItem,
+          isActiveTable ? styles.activeTable : undefined,
+        ]}
         codeTable={item.tableName}
+        onPress={onPressTable(item)}
       />
     );
   };
@@ -41,6 +66,7 @@ const Unit = (props: any) => {
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           scrollEnabled={false}
+          listKey={'TableHorizontal'}
         />
       </View>
     );
@@ -72,17 +98,13 @@ const Unit = (props: any) => {
         {showTable && (
           <>
             <FlatList
-              data={listTable}
+              data={listTables}
               renderItem={renderItem}
               style={styles.flatList}
+              listKey={'TableVertical'}
             />
-            {isShowListDish && (
-              <Animatable.View
-                animation={'slideInUp'}
-                duration={400}
-                style={{}}>
-                <ListDish navigation={navigation} />
-              </Animatable.View>
+            {!lodash?.isEmpty(activeTable) && (
+              <ListDish navigation={navigation} />
             )}
           </>
         )}
@@ -136,15 +158,12 @@ const styles = StyleSheet.create({
   tableItem: {
     marginRight: wp('5'),
   },
-  fadingContainer: {
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    backgroundColor: 'powderblue',
+  activeTable: {
+    borderWidth: 4,
+    borderColor: '#ED2024',
   },
 });
 const mapStateFromProps = (state: any) => {
-  return {
-    listTable: state.systems.listTable,
-  };
+  return {};
 };
 export default connect(mapStateFromProps, null)(Unit);

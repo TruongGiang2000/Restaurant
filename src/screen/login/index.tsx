@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Image} from 'react-native';
+import {View, StyleSheet, Image, ScrollView} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -9,14 +9,16 @@ import TextInputCustom from '../../component/TextInputCustom';
 import {Fonts} from '../../contants';
 import {ICONMAIN} from '../../assets';
 import {connect} from 'react-redux';
-import {auth} from '../../redux';
+import {auth, systems} from '../../redux';
 import {actionMain} from '../../util';
+import jwt_decode from 'jwt-decode';
+import lodash from 'lodash';
 const Login = (props: any) => {
   const [userName, setUserName] = useState('');
   const [pass, setPass] = useState('');
   const [txtErrorUser, setTxtErrorUser] = useState(null);
   const [txtErrorPass, setTxtErrorPass] = useState(null);
-  const {navigation, token, signIn} = props;
+  const {signIn, profileInfo, getListArea} = props;
   const onChangeUser = (value: any) => {
     if (!!value) {
       setTxtErrorUser('');
@@ -44,40 +46,44 @@ const Login = (props: any) => {
       username: userName,
       password: pass,
     };
-    console.log('loading');
     actionMain.loading(true);
     signIn(dataLogin);
   };
   useEffect(() => {
-    !!token && navigation.navigate('Home');
-  }, [token]);
+    if (profileInfo) {
+      const data = {site: profileInfo?.siteId, store: profileInfo?.storeId};
+      getListArea(data);
+    }
+  }, [profileInfo]);
   return (
     <BackgroundBig>
-      <View style={styles.MainContainer}>
-        <Image
-          source={ICONMAIN}
-          style={styles.iconMain}
-          resizeMode={'contain'}
-        />
-        <TextInputCustom
-          style={styles.topSpace}
-          placeHolder={'Tài khoản'}
-          onChangeText={onChangeUser}
-          txtError={txtErrorUser}
-        />
-        <TextInputCustom
-          style={styles.topSpace}
-          placeHolder={'Mật khẩu'}
-          onChangeText={onChangePass}
-          secureTextEntry={true}
-          txtError={txtErrorPass}
-        />
-        <ButtonCustom
-          style={styles.button}
-          onPress={onPress}
-          title={'Đăng nhập'}
-        />
-      </View>
+      <ScrollView>
+        <View style={styles.MainContainer}>
+          <Image
+            source={ICONMAIN}
+            style={styles.iconMain}
+            resizeMode={'contain'}
+          />
+          <TextInputCustom
+            style={styles.topSpace}
+            placeHolder={'Tài khoản'}
+            onChangeText={onChangeUser}
+            txtError={txtErrorUser}
+          />
+          <TextInputCustom
+            style={styles.topSpace}
+            placeHolder={'Mật khẩu'}
+            onChangeText={onChangePass}
+            secureTextEntry={true}
+            txtError={txtErrorPass}
+          />
+          <ButtonCustom
+            style={styles.button}
+            onPress={onPress}
+            title={'Đăng nhập'}
+          />
+        </View>
+      </ScrollView>
     </BackgroundBig>
   );
 };
@@ -114,6 +120,8 @@ const styles = StyleSheet.create({
 const mapStateFromProps = (state: any) => {
   return {
     token: state.auth.token,
+    profileInfo: state.auth.profileInfo,
+    listArea: state.systems.listArea,
   };
 };
-export default connect(mapStateFromProps, auth)(Login);
+export default connect(mapStateFromProps, {...auth, ...systems})(Login);

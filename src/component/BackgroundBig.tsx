@@ -8,13 +8,13 @@ import {
 } from 'react-native';
 import {BACKGROUND} from '../assets';
 export const BackgroundBig = (props: any) => {
-  const {children} = props;
+  const {children, containerStyle} = props;
   return (
     <ImageBackground
       resizeMode={'cover'}
       source={BACKGROUND}
-      style={styles.MainContainer}>
-      <ScrollView>{children}</ScrollView>
+      style={[styles.MainContainer, containerStyle]}>
+      {children}
     </ImageBackground>
   );
 };

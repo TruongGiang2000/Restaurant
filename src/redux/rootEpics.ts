@@ -1,5 +1,5 @@
 import {combineEpics} from 'redux-observable';
 import {signIn} from './auth/epic';
-import {getAllTable, getAllArea} from './system/epic';
-const rootEpics = combineEpics(signIn, getAllTable, getAllArea);
+import {getAllArea, getMenu} from './system/epic';
+const rootEpics = combineEpics(signIn, getAllArea, getMenu);
 export default rootEpics;

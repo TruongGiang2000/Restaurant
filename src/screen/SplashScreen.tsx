@@ -10,25 +10,17 @@ import {mainColors} from '../contants/Colors';
 import {Fonts} from '../contants';
 import {connect} from 'react-redux';
 import {systems} from '../redux';
+import {ICONMAIN} from '../assets';
+import {BackgroundBig} from '../component';
 import lodash from 'lodash';
-import {LOGO} from '../assets';
 const SplashScreen = (props: any) => {
   const [syncMessage, setSyncMessage] = useState('');
   const [codePushSuccess, setCodePushSuccess] = useState(false);
-  const {
-    token,
-    navigation,
-    getListTable,
-    getListArea,
-    listTable,
-    listArea,
-  } = props;
+  const {getListArea, profileInfo, setSplashLoad, listArea, getMenu} = props;
   const loadingApp = () => {
     setCodePushSuccess(true);
   };
   useEffect(() => {
-    getListTable();
-    getListArea();
     CodePush.sync(
       {
         installMode: CodePush.InstallMode.IMMEDIATE,
@@ -66,33 +58,33 @@ const SplashScreen = (props: any) => {
         break;
       case CodePush.SyncStatus.UP_TO_DATE:
       default:
-        setSyncMessage('ɚ 0.4');
+        setSyncMessage('ɚ 0.5');
         loadingApp();
         break;
     }
   };
   useEffect(() => {
-    if (
-      codePushSuccess &&
-      !lodash.isEmpty(listArea) &&
-      !lodash.isEmpty(listTable)
-    ) {
-      setTimeout(() => {
-        if (token) {
-          return navigation.navigate('Home');
-        }
-        props.navigation.navigate('Login');
-      }, 3000);
+    if (profileInfo) {
+      const data = {site: profileInfo?.siteId, store: profileInfo?.storeId};
+      getListArea(data);
+      getMenu(data);
     }
-  }, [codePushSuccess, listTable, listArea]);
+  }, [profileInfo]);
+  useEffect(() => {
+    if (codePushSuccess && !lodash.isEmpty(listArea)) {
+      setSplashLoad(true);
+    }
+  }, [codePushSuccess, listArea]); //, profileInfo, listArea
   return (
-    <View style={styles.container}>
-      <Image source={LOGO} resizeMode={'contain'} style={styles.image} />
-      <View style={{height: hp('5')}}>
-        <SkypeIndicator color={mainColors.mainColor} size={wp('10')} />
+    <BackgroundBig>
+      <View style={styles.container}>
+        <Image source={ICONMAIN} resizeMode={'contain'} style={styles.image} />
+        <View style={{height: hp('5')}}>
+          <SkypeIndicator color={mainColors.mainColor} size={wp('10')} />
+        </View>
+        <Text style={styles.syncMess}>{syncMessage}</Text>
       </View>
-      <Text style={styles.syncMess}>{syncMessage}</Text>
-    </View>
+    </BackgroundBig>
   );
 };
 
@@ -103,8 +95,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   image: {
-    width: wp('30'),
-    height: hp('20'),
+    width: wp('40'),
+    height: wp('40'),
   },
   indicator: {
     height: wp('10'),
@@ -121,8 +113,8 @@ const styles = StyleSheet.create({
 const mapStateFromProps = (state: any) => {
   return {
     token: state.auth.token,
-    listTable: state.systems.listTable,
     listArea: state.systems.listArea,
+    profileInfo: state.auth.profileInfo,
   };
 };
 export default connect(mapStateFromProps, systems)(SplashScreen);

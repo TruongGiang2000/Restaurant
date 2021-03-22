@@ -5,13 +5,14 @@ import {createEpicMiddleware} from 'redux-observable';
 import rootReducers from './reducer';
 import rootEpic from './rootEpics';
 import {createWhitelistFilter} from 'redux-persist-transform-filter';
-const token = createWhitelistFilter('auth', ['token']);
+const profileInfo = createWhitelistFilter('auth', ['profileInfo']);
 const epicMiddleware = createEpicMiddleware();
 const persistConfig: any = {
   key: 'root',
-  transforms: [token],
+  transforms: [profileInfo],
   storage: AsyncStorage,
   timeout: 0,
+  blacklist: ['systems'],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducers);
 const configureStore = createStore(
@@ -22,6 +23,5 @@ epicMiddleware.run(rootEpic);
 export const persistor = persistStore(configureStore);
 export default configureStore;
 configureStore.subscribe(() => {
-  // console.log('different', difference(configureStore.getState(), preProps));
   console.log('configureStore', configureStore.getState());
 });

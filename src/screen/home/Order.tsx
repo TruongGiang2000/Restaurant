@@ -8,30 +8,30 @@ import Unit from '../../component/Unit';
 import {BackgroundSmall} from '../../component';
 import {mainColors, Fonts, DataStatus} from '../../contants';
 import {connect} from 'react-redux';
+import {mapDataListTable} from '../../util';
 const Order = (props: any) => {
   const [active, setActive] = useState({});
   const {listArea, navigation} = props;
   const onPress = (item: any) => () => {
-    if (Object.values(active).some((it) => it === item.areaName)) {
-      const filterItem = Object.values(active).filter(
-        (it) => it != item.areaName,
-      );
+    if (Object.values(active).some((it) => it === item._id)) {
+      const filterItem = Object.values(active).filter((it) => it != item._id);
       return setActive(filterItem);
     }
-    setActive({...active, [item.areaName]: item.areaName});
+    setActive({...active, [item._id]: item._id});
   };
   const renderItem = ({item, index}) => {
-    const showTable = Object.values(active).some((it) => it === item.areaName);
+    const area = item?.area;
+    const showTable = Object.values(active).some((it) => it === area._id);
+    const listTables = mapDataListTable(item?.tables);
     return (
       <Unit
-        unit={item.areaUnit}
-        codeUnit={item.areaName}
-        onPress={onPress(item)}
-        active={showTable}
+        unit={area.areaUnit}
+        codeUnit={area.areaName}
+        onPress={onPress(area)}
         style={index == 0 ? undefined : {marginTop: hp('3')}}
         showTable={showTable}
-        isShowListDish={index == 0}
         navigation={navigation}
+        listTables={listTables}
       />
     );
   };
@@ -45,7 +45,7 @@ const Order = (props: any) => {
       <View style={[styles.row, {flexWrap: 'wrap', width: '80%'}]}>
         {DataStatus?.map((status) => {
           return (
-            <View style={[styles.row, {width: wp(35)}]}>
+            <View style={[styles.row, {width: wp(35)}]} key={`${status.title}`}>
               <View
                 style={[styles.noteFood, {backgroundColor: status.color}]}
               />

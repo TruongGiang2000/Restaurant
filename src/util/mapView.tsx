@@ -6,11 +6,12 @@ export const getScreenByList = (
   initialParams?: any,
 ) => {
   return list.map((it, index) => {
+    console.log('it', it.menuName);
     return (
       <Navigator.Screen
-        initialParams={{data: it?.data} || initialParams}
-        key={it.key + index}
-        name={it.key}
+        initialParams={{data: it?.foodItems} || initialParams}
+        key={it.menuCode + index}
+        name={it.menuName}
         component={componentDefault}
       />
     );

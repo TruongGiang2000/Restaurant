@@ -155,7 +155,7 @@ export const MenuDummy = [
         price: '100000',
         status: 'Còn',
         img:
-          'hhttps://mcdonalds.vn/uploads/2018/food/burgers/mcchicken-deluxe.png',
+          'https://mcdonalds.vn/uploads/2018/food/burgers/mcchicken-deluxe.png',
       },
       {
         name: 'Gà chiên nước mắm',

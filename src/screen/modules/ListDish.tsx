@@ -7,6 +7,7 @@ import {
 import {Fonts} from '../../contants';
 import {ButtonCustom} from './../../component';
 import {DummyListDish, mainColors} from '../../contants';
+import {ScrollView} from 'react-native-gesture-handler';
 export const ListDish = (props: any) => {
   const {style, navigation} = props;
   const getColorByStatus = (status: string) => {
@@ -48,11 +49,14 @@ export const ListDish = (props: any) => {
         <Text style={styles.titleHeader}>Giá</Text>
         <Text style={styles.titleHeader}>Trạng thái</Text>
       </View>
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        data={DummyListDish}
-        renderItem={renderItem}
-      />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <FlatList
+          data={DummyListDish}
+          renderItem={renderItem}
+          scrollEnabled={false}
+          keyExtractor={(item, index) => `${item}${index}`}
+        />
+      </ScrollView>
       <ButtonCustom
         title={'Menu'}
         style={styles.menuButton}
@@ -73,10 +77,10 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#333333',
     borderRadius: wp('2'),
-    height: hp('60'),
+    maxHeight: hp('50'),
     width: wp('90'),
     alignSelf: 'center',
-    marginVertical: hp('5'),
+    marginVertical: hp('2'),
     justifyContent: 'flex-end',
     overflow: 'hidden',
     backgroundColor: mainColors.whiteColor,

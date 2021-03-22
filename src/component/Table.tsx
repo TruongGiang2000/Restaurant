@@ -14,9 +14,9 @@ const Table = (props: any) => {
     <Ripple
       onPress={onPress}
       style={[
-        style,
         styles.containerTable,
         {backgroundColor: backgroundColor},
+        style,
       ]}>
       <FastImage
         resizeMode={'contain'}
