@@ -15,7 +15,7 @@ export const ListMenu = (props: any) => {
       <View style={styles.viewRowItem}>
         <View style={styles.viewImgItem}>
           <FastImage
-            source={{uri: item.img}}
+            source={{uri: item.urlImage}}
             style={StyleSheet.absoluteFillObject}
             resizeMode={'cover'}
           />
@@ -28,11 +28,11 @@ export const ListMenu = (props: any) => {
               resizeMode={'contain'}
             />
             <Text style={styles.textInfoMenu} numberOfLines={1}>
-              {item?.name}
+              {item?.foodName}
             </Text>
             <Text
               style={styles.textInfoMenu}
-              numberOfLines={1}>{`${item?.price} VNĐ`}</Text>
+              numberOfLines={1}>{`${item?.price[0]?.valuePrice} VNĐ`}</Text>
           </View>
           <View style={styles.line} />
           <View style={styles.viewSll}>

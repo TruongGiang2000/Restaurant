@@ -1,12 +1,5 @@
 import React, {useState} from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  FlatList,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import {View, StyleSheet, Text, FlatList} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -20,7 +13,7 @@ import FastImage from 'react-native-fast-image';
 import {connect} from 'react-redux';
 import {ListDish} from '../screen/modules';
 import lodash from 'lodash';
-import {} from 'react-native-gesture-handler';
+import {getColorByStatus} from '../util';
 const Unit = (props: any) => {
   const {
     unit,
@@ -54,6 +47,7 @@ const Unit = (props: any) => {
         ]}
         codeTable={item.tableName}
         onPress={onPressTable(item)}
+        backgroundColor={getColorByStatus(item?.status)}
       />
     );
   };

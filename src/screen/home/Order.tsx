@@ -21,12 +21,12 @@ const Order = (props: any) => {
   };
   const renderItem = ({item, index}) => {
     const area = item?.area;
-    const showTable = Object.values(active).some((it) => it === area._id);
+    const showTable = Object.values(active).some((it) => it === area?._id);
     const listTables = mapDataListTable(item?.tables);
     return (
       <Unit
-        unit={area.areaUnit}
-        codeUnit={area.areaName}
+        unit={area?.areaUnit}
+        codeUnit={area?.areaName}
         onPress={onPress(area)}
         style={index == 0 ? undefined : {marginTop: hp('3')}}
         showTable={showTable}

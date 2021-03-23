@@ -11,14 +11,13 @@ import {ICONMAIN} from '../../assets';
 import {connect} from 'react-redux';
 import {auth, systems} from '../../redux';
 import {actionMain} from '../../util';
-import jwt_decode from 'jwt-decode';
 import lodash from 'lodash';
 const Login = (props: any) => {
   const [userName, setUserName] = useState('');
   const [pass, setPass] = useState('');
   const [txtErrorUser, setTxtErrorUser] = useState(null);
   const [txtErrorPass, setTxtErrorPass] = useState(null);
-  const {signIn, profileInfo, getListArea} = props;
+  const {signIn, profileInfo, getListArea, getMenu, listArea, listMenu} = props;
   const onChangeUser = (value: any) => {
     if (!!value) {
       setTxtErrorUser('');
@@ -53,8 +52,11 @@ const Login = (props: any) => {
     if (profileInfo) {
       const data = {site: profileInfo?.siteId, store: profileInfo?.storeId};
       getListArea(data);
+      getMenu(data);
+      props?.navigation?.navigate('Home');
     }
   }, [profileInfo]);
+  useEffect(() => {});
   return (
     <BackgroundBig>
       <ScrollView>
@@ -122,6 +124,7 @@ const mapStateFromProps = (state: any) => {
     token: state.auth.token,
     profileInfo: state.auth.profileInfo,
     listArea: state.systems.listArea,
+    listMenu: state.systems.listMenu,
   };
 };
 export default connect(mapStateFromProps, {...auth, ...systems})(Login);
