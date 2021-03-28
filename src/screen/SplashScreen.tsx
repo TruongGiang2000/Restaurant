@@ -59,7 +59,7 @@ const SplashScreen = (props: any) => {
         break;
       case CodePush.SyncStatus.UP_TO_DATE:
       default:
-        setSyncMessage('ɚ 0.6');
+        setSyncMessage('ɚ 0.7');
         loadingApp();
         break;
     }
@@ -73,7 +73,6 @@ const SplashScreen = (props: any) => {
   }, [profileInfo]);
   const isSetSplashLoad = profileInfo ? !lodash.isEmpty(listArea) : true;
   useEffect(() => {
-    console.log('codePushSuccess', codePushSuccess, isSetSplashLoad);
     if (codePushSuccess && isSetSplashLoad) {
       setSplashLoad(true);
     }
