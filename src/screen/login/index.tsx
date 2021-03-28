@@ -11,7 +11,6 @@ import {ICONMAIN} from '../../assets';
 import {connect} from 'react-redux';
 import {auth, systems} from '../../redux';
 import {actionMain} from '../../util';
-import lodash from 'lodash';
 const Login = (props: any) => {
   const [userName, setUserName] = useState('');
   const [pass, setPass] = useState('');
@@ -53,7 +52,6 @@ const Login = (props: any) => {
       const data = {site: profileInfo?.siteId, store: profileInfo?.storeId};
       getListArea(data);
       getMenu(data);
-      props?.navigation?.navigate('Home');
     }
   }, [profileInfo]);
   useEffect(() => {});

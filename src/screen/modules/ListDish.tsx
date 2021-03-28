@@ -35,7 +35,8 @@ export const ListDish = (props: any) => {
           style={[
             styles.statusStyle,
             {backgroundColor: getColorByStatus(item?.status)},
-          ]}>
+          ]}
+          numberOfLines={2}>
           {item?.status}
         </Text>
       </View>
@@ -55,6 +56,7 @@ export const ListDish = (props: any) => {
           renderItem={renderItem}
           scrollEnabled={false}
           keyExtractor={(item, index) => `${item}${index}`}
+          listKey={'ListDishUniKey'}
         />
       </ScrollView>
       <ButtonCustom

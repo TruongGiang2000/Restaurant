@@ -14,6 +14,7 @@ import {connect} from 'react-redux';
 import {ListDish} from '../screen/modules';
 import lodash from 'lodash';
 import {getColorByStatus} from '../util';
+import {ScrollView} from 'react-native-gesture-handler';
 const Unit = (props: any) => {
   const {
     unit,
@@ -65,9 +66,10 @@ const Unit = (props: any) => {
       </View>
     );
   };
+  const isShowListDish = !lodash?.isEmpty(activeTable);
   return (
     <>
-      <View style={[style, styles.MainContainer]}>
+      <View style={[styles.MainContainer, style]}>
         <Ripple onPress={onPress} style={styles.viewTitle}>
           <FastImage
             source={showTable ? UNITACTIVE : UNIT}
@@ -88,21 +90,20 @@ const Unit = (props: any) => {
           <View style={styles.line} />
         </View>
       </View>
-      <Animatable.View duration={400} animation={'fadeInUp'} easing={'linear'}>
-        {showTable && (
-          <>
+      {showTable && (
+        <>
+          <ScrollView
+            style={{maxHeight: isShowListDish ? hp(25) : undefined}}
+            showsVerticalScrollIndicator={false}>
             <FlatList
               data={listTables}
               renderItem={renderItem}
               style={styles.flatList}
-              listKey={'TableVertical'}
             />
-            {!lodash?.isEmpty(activeTable) && (
-              <ListDish navigation={navigation} />
-            )}
-          </>
-        )}
-      </Animatable.View>
+          </ScrollView>
+          {isShowListDish && <ListDish navigation={navigation} />}
+        </>
+      )}
     </>
   );
 };
@@ -142,12 +143,11 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   flatList: {
-    marginTop: hp('3'),
+    marginTop: hp('1'),
   },
   viewFlatListChild: {
     alignItems: 'center',
     paddingHorizontal: wp('4'),
-    marginBottom: wp('2'),
   },
   tableItem: {
     marginRight: wp('5'),

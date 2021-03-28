@@ -27,7 +27,7 @@ const Table = (props: any) => {
       <FastImage
         style={styles.tableImage}
         source={TABLE}
-        resizeMode={'cover'}
+        resizeMode={'contain'}
       />
     </Ripple>
   );
@@ -37,29 +37,31 @@ const styles = StyleSheet.create({
   containerTable: {
     borderWidth: 2,
     borderColor: '#333333',
-    width: wp('26'),
+    width: wp('24'),
     alignItems: 'center',
     justifyContent: 'center',
-    height: hp('9'),
+    height: hp('7.5'),
     borderRadius: wp('2'),
     overflow: 'hidden',
+    marginTop: hp(0.8),
   },
   image: {
-    width: wp('16'),
-    height: wp('10'),
+    width: wp('15'),
+    height: wp('15') * 0.63362069,
     position: 'absolute',
-    top: '38%',
-    left: '33%',
+    top: '30%',
+    left: '35%',
   },
   tableImage: {
-    width: wp('18'),
-    height: hp('6'),
+    width: wp('15'),
+    height: wp('15') * 0.769230769,
+    marginBottom: hp(0.5),
   },
   titleTable: {
     fontFamily: Fonts.Roboto_Stab_Bold,
-    fontSize: wp('4'),
+    fontSize: wp('3.5'),
     color: '#000',
-    marginBottom: hp('-1.5'),
+    marginBottom: hp(-1.3),
   },
 });
 export default Table;

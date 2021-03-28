@@ -29,6 +29,7 @@ const SplashScreen = (props: any) => {
     );
   }, []);
   const codePushStatusDidChange = (syncStatus: any) => {
+    console.log('syncStatus', syncStatus);
     switch (syncStatus) {
       case CodePush.SyncStatus.CHECKING_FOR_UPDATE:
         setSyncMessage('');
@@ -70,11 +71,13 @@ const SplashScreen = (props: any) => {
       getMenu(data);
     }
   }, [profileInfo]);
+  const isSetSplashLoad = profileInfo ? !lodash.isEmpty(listArea) : true;
   useEffect(() => {
-    if (codePushSuccess) {
+    console.log('codePushSuccess', codePushSuccess, isSetSplashLoad);
+    if (codePushSuccess && isSetSplashLoad) {
       setSplashLoad(true);
     }
-  }, [codePushSuccess]); //, profileInfo, listArea
+  }, [codePushSuccess, listArea]);
   return (
     <BackgroundBig>
       <View style={styles.container}>

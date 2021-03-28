@@ -17,7 +17,7 @@ export const getAllArea = ($action: any) => {
           return systemAction.getListAreaSuccess(data?.data);
         })
         .catch((err: any) => {
-          console.log('err', err?.response);
+          console.log('errgetAllArea', err);
           return systemAction.getListAreaFail(err);
         })
         .finally(() => actionMain.loading(false));
@@ -35,7 +35,7 @@ export const getMenu = ($action: any) => {
           return systemAction.getMenuSuccess(data?.data);
         })
         .catch((err: any) => {
-          console.log('err', err?.response);
+          console.log('errgetMenu', err?.response);
           return systemAction.getMenuFail(err?.response);
         });
     }),
