@@ -13,6 +13,7 @@ import {systems} from '../redux';
 import {ICONMAIN} from '../assets';
 import {BackgroundBig} from '../component';
 import lodash from 'lodash';
+import {socket} from '../contants';
 const SplashScreen = (props: any) => {
   const [syncMessage, setSyncMessage] = useState('');
   const [codePushSuccess, setCodePushSuccess] = useState(false);
@@ -27,6 +28,20 @@ const SplashScreen = (props: any) => {
       },
       codePushStatusDidChange,
     );
+    console.log('socket', socket);
+    socket.connect();
+    socket.on('connect', () => {
+      console.log('connect');
+      props.setConnectSocket(true);
+    });
+    socket.on('disconnect', () => {
+      console.log('disconnect');
+      props.setConnectSocket(false);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
   }, []);
   const codePushStatusDidChange = (syncStatus: any) => {
     console.log('syncStatus', syncStatus);

@@ -9,5 +9,5 @@ export const ICONMAIN = require('./images/IconMain.png');
 export const LOGO = require('./images/Logo.png');
 export const ICON_BACK = require('./images/iconBack.png');
 export const MENU_INFO = require('./images/menuInfo.png');
-export const AMOUNT_MENU = require('./images/amountMenu.png');
-export const STATUS_MENU = require('./images/statusMenu.png');
+export const STATUS_OVER = require('./images/statusOver.png');
+export const DISH_STORE = require('./images/servingDish.png');

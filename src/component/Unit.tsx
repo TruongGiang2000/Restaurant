@@ -1,13 +1,12 @@
-import React, {useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {View, StyleSheet, Text, FlatList} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {mainColors, Fonts, DataTable} from '../contants';
+import {mainColors, Fonts} from '../contants';
 import Table from '../component/Table';
 import {UNIT, STT, UNITACTIVE} from '../assets';
-import * as Animatable from 'react-native-animatable';
 import Ripple from 'react-native-material-ripple';
 import FastImage from 'react-native-fast-image';
 import {connect} from 'react-redux';
@@ -26,6 +25,9 @@ const Unit = (props: any) => {
     listTables,
   } = props;
   const [activeTable, setActiveTable] = useState({});
+  const refFlatListMain = useRef<any>();
+  const [indexScroll, setIndexScroll] = useState<number>(undefined);
+
   const onPressTable = (item: any) => () => {
     if (Object.values(activeTable).some((it) => it === item._id)) {
       const filterItem = Object.values(activeTable).filter(
@@ -52,7 +54,16 @@ const Unit = (props: any) => {
       />
     );
   };
-  const renderItem = ({item}) => {
+
+  // useEffect(() => {
+  //   if (indexScroll && refFlatListMain.current)
+  //     refFlatListMain.current.scrollToIndex({animated: true, indexScroll});
+  // }, [indexScroll]);
+
+  const renderItem = ({item, index}) => {
+    // const getFirstItem = lodash.get(Object.values(activeTable), '[0]', {});
+    // const isRightHozi = item.findIndex((it) => it?._id == getFirstItem);
+    // isRightHozi != -1 ? setIndexScroll(index) : setIndexScroll(undefined);
     return (
       <View style={styles.viewFlatListChild}>
         <FlatList
@@ -96,6 +107,7 @@ const Unit = (props: any) => {
             style={{maxHeight: isShowListDish ? hp(25) : undefined}}
             showsVerticalScrollIndicator={false}>
             <FlatList
+              ref={refFlatListMain}
               data={listTables}
               renderItem={renderItem}
               style={styles.flatList}

@@ -9,10 +9,14 @@ export const getScreenByList = (
     const nameTab = it?.menuName || it?.category?.categoryName;
     return (
       <Navigator.Screen
-        initialParams={{data: it?.foodItems} || initialParams}
+        initialParams={
+          {data: it?.foodItems, ...initialParams} ||
+          initialParams
+        }
         key={it.menuCode + index}
         name={nameTab}
         component={componentDefault}
+
       />
     );
   });

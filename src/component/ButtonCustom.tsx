@@ -6,7 +6,6 @@ import {
 } from 'react-native-responsive-screen';
 import {Fonts, mainColors} from '../contants';
 import Ripple from 'react-native-material-ripple';
-import * as Annimatable from 'react-native-animatable';
 export const ButtonCustom = (props: any) => {
   const {title, onPress, style, titleStyle} = props;
   return (
@@ -20,6 +19,8 @@ const styles = StyleSheet.create({
   MainContainer: {
     backgroundColor: '#3e8a4f',
     borderRadius: wp(2),
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
     fontFamily: Fonts.Roboto_Slab_Regular,

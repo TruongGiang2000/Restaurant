@@ -1,123 +1,64 @@
 import React from 'react';
-import {Text, StyleSheet, View, FlatList} from 'react-native';
-import FastImage from 'react-native-fast-image';
-import {Fonts, mainColors} from '../../contants';
+import {StyleSheet, FlatList, View, Text, ScrollView} from 'react-native';
+import {mainColors} from '../../contants';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {BackgroundSmall, ButtonCustom} from '../../component';
-import {MENU_INFO, AMOUNT_MENU} from '../../assets';
-export const ListMenu = (props: any) => {
+import {ModalOrderFood} from './modules';
+import {BackgroundSmall} from '../../component';
+import {connect, useSelector} from 'react-redux';
+import {systems} from '../../redux';
+import FastImage from 'react-native-fast-image';
+import {DISH_STORE} from '../../assets';
+import Ripple from 'react-native-material-ripple';
+const ListMenu = (props: any) => {
   const params = props?.route?.params;
-  const renderItem = ({item}) => {
+  const setItem = (item) => {
+    props.setOrderFood(item);
+  };
+  const {orderFood} = useSelector((state) => ({
+    orderFood: state?.systems?.orderFood,
+  }));
+  const renderItem = ({item, index}) => {
+    const isOverFood = item?.status == 0;
     return (
-      <View style={styles.viewRowItem}>
-        <View style={styles.viewImgItem}>
-          <FastImage
-            source={{uri: item.urlImage}}
-            style={StyleSheet.absoluteFillObject}
-            resizeMode={'cover'}
-          />
-        </View>
-        <View>
-          <View style={styles.menuInfoView}>
-            <FastImage
-              source={MENU_INFO}
-              style={StyleSheet.absoluteFillObject}
-              resizeMode={'contain'}
-            />
-            <Text style={styles.textInfoMenu} numberOfLines={1}>
-              {item?.foodName}
-            </Text>
-            <Text
-              style={styles.textInfoMenu}
-              numberOfLines={1}>{`${item?.price[0]?.valuePrice} VNĐ`}</Text>
-          </View>
-          <View style={styles.line} />
-          <View style={styles.viewSll}>
-            <FastImage
-              source={AMOUNT_MENU}
-              style={StyleSheet.absoluteFillObject}
-              resizeMode={'contain'}
-            />
-            <View style={styles.reduction}>
-              <Text style={{fontSize: wp(4)}}>-</Text>
-            </View>
-            <Text>1</Text>
-            <View style={styles.reduction}>
-              <Text style={{fontSize: wp(4)}}>+</Text>
-            </View>
-          </View>
-        </View>
-      </View>
+      <ModalOrderFood
+        item={item}
+        isOverFood={isOverFood}
+        onPushItem={(item) => setItem(item)}
+      />
     );
   };
+  const isNullOrder = orderFood?.length == 0;
   return (
-    <BackgroundSmall>
-      <View style={styles.lineHeader} />
+    <BackgroundSmall style={{justifyContent: 'flex-end'}}>
+      <Ripple
+        style={styles.dishStore}
+        onPress={() => props?.navigation.navigate('ListOrder')}>
+        <View style={[styles.viewSllStoreFood, isNullOrder && {opacity: 0}]}>
+          <Text style={{color: mainColors.whiteColor, fontSize: wp(3)}}>
+            {orderFood?.length}
+          </Text>
+        </View>
+        <FastImage source={DISH_STORE} style={{width: '70%', height: '70%'}} />
+      </Ripple>
       <FlatList
         data={params?.data}
         renderItem={renderItem}
         contentContainerStyle={styles.containerFlatlist}
       />
-      <ButtonCustom title={'Xác nhận'} style={styles.btnConfirm} />
     </BackgroundSmall>
   );
 };
 const styles = StyleSheet.create({
-  lineHeader: {
-    width: '95%',
-    height: 1,
-    backgroundColor: mainColors.blackColor,
-    alignSelf: 'center',
-  },
   viewRowItem: {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: hp(1),
   },
-  viewImgItem: {
-    width: wp(25),
-    height: hp(13),
-    borderWidth: 2,
-    borderColor: mainColors.mainColor,
-  },
   containerFlatlist: {
     paddingHorizontal: wp(2),
-    marginTop: hp(2),
-  },
-  menuInfoView: {
-    width: wp(65),
-    height: wp(65) * 0.20674698795,
-    marginLeft: 1,
-    justifyContent: 'center',
-    paddingLeft: wp(8),
-  },
-  textInfoMenu: {
-    fontFamily: Fonts.Roboto_Slab_Regular,
-    fontSize: wp(3.8),
-    color: '#000',
-  },
-  btnConfirm: {
-    width: '100%',
-  },
-  viewSll: {
-    width: wp(17),
-    height: wp(17) * 0.33333333333,
-    marginLeft: wp(0.5),
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingLeft: wp(1),
-    paddingRight: wp(4),
-  },
-  line: {
-    height: 1.5,
-    width: wp(40),
-    backgroundColor: mainColors.blackColor,
-    marginVertical: hp(0.5),
-    marginLeft: wp(0.5),
   },
   reduction: {
     borderColor: mainColors.disableColor,
@@ -128,4 +69,37 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  dishStore: {
+    width: wp(12),
+    height: wp(12),
+    backgroundColor: mainColors.mainColor,
+    borderRadius: wp(6),
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'flex-end',
+    marginEnd: wp(2),
+    marginTop: hp(1),
+  },
+  viewSllStoreFood: {
+    width: wp(5),
+    height: wp(5),
+    backgroundColor: '#ED1C24',
+    position: 'absolute',
+    zIndex: 99,
+    top: 0,
+    right: 0,
+    borderRadius: wp(2.5),
+    borderWidth: 1,
+    borderColor: mainColors.whiteColor,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  btnConfirm: {
+    width: wp(95),
+    alignSelf: 'center',
+    marginVertical: hp(1),
+    height: hp(5),
+    borderRadius: wp(1),
+  },
 });
+export default connect(null, systems)(ListMenu);

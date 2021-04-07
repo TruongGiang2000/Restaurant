@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {getScreenByList} from '../../util';
 import {Fonts, mainColors, MenuDummy} from '../../contants';
-import {ListMenu} from './ListMenu';
+import ListMenu from './ListMenu';
 import {View, Text, FlatList} from 'react-native';
 import Ripple from 'react-native-material-ripple';
 import {StyleSheet} from 'react-native';
@@ -13,7 +13,9 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {useSelector} from 'react-redux';
+import {ButtonCustom} from '../../component';
 const Tab = createMaterialTopTabNavigator();
+
 const Tabs = ({state, descriptors, navigation, position}) => {
   const renderItem = ({item, index}) => {
     const isLastItem = index == state?.routes?.length - 1;
@@ -40,7 +42,7 @@ const Tabs = ({state, descriptors, navigation, position}) => {
     );
   };
   return (
-    <View>
+    <View style={{backgroundColor: mainColors.whiteColor}}>
       <FlatList
         data={state?.routes}
         renderItem={renderItem}
@@ -48,12 +50,15 @@ const Tabs = ({state, descriptors, navigation, position}) => {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.containerTab}
       />
+      <View style={styles.lineHeader} />
     </View>
   );
 };
 export const MyTabs = (props: any) => {
-  const { menu} = useSelector((state) => ({
+  const {menu, orderFood, profileInfo} = useSelector((state) => ({
     menu: state?.systems?.menu,
+    orderFood: state?.systems?.orderFood,
+    profileInfo: state?.systems?.profileInfo,
   }));
   return (
     <>
@@ -82,6 +87,7 @@ export const MyTabs = (props: any) => {
         tabBar={Tabs}>
         {getScreenByList(Tab, menu, ListMenu, {})}
       </Tab.Navigator>
+      <ButtonCustom title={'Xác nhận'} style={styles.btnConfirm} />
     </>
   );
 };
@@ -115,5 +121,18 @@ const styles = StyleSheet.create({
     width: '110%',
     height: 1,
     marginTop: hp(0.3),
+  },
+  btnConfirm: {
+    width: wp(95),
+    alignSelf: 'center',
+    marginVertical: hp(1),
+    height: hp(5),
+    borderRadius: wp(1),
+  },
+  lineHeader: {
+    width: '95%',
+    height: 1,
+    backgroundColor: mainColors.blackColor,
+    alignSelf: 'center',
   },
 });

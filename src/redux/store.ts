@@ -5,7 +5,7 @@ import {createEpicMiddleware} from 'redux-observable';
 import rootReducers from './reducer';
 import rootEpic from './rootEpics';
 import {createWhitelistFilter} from 'redux-persist-transform-filter';
-const profileInfo = createWhitelistFilter('auth', ['profileInfo']);
+const profileInfo = createWhitelistFilter('auth', ['profileInfo', 'token']);
 const epicMiddleware = createEpicMiddleware();
 const persistConfig: any = {
   key: 'root',
