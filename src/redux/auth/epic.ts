@@ -1,26 +1,28 @@
 import {types, authAction} from './actions';
 import {$axios} from '../../contants';
 import {ofType} from 'redux-observable';
-import {mergeMap} from 'rxjs/operators';
+import {mergeMap, catchError} from 'rxjs/operators';
 import {actionMain} from '../../util/mainActions';
 import jwt_decode from 'jwt-decode';
-export const signIn = ($action: any) => {
-  return $action.pipe(
+import {from} from 'rxjs';
+export const signIn = (action$: any) => {
+  return action$.pipe(
     ofType(types.SIGN_IN),
     mergeMap((act: any) => {
-      return $axios.api
-        .post('authentication/signin', act?.payload)
-        .then((rs: any) => {
+      return from($axios.api.post('authentication/signin', act?.payload)).pipe(
+        mergeMap((rs: any) => {
           const {data} = rs;
           const decoded = jwt_decode(data?.data);
-          return {
-            ...authAction.signInSuccess(data),
-            ...authAction.setProfileInfo(decoded),
-          };
-        })
-        .catch((err: any) => {
+          console.log('datea', data);
+          return [
+            authAction.signInSuccess(data),
+            authAction.setProfileInfo(decoded),
+          ];
+        }),
+        catchError((error) => {
           if (
-            err?.response?.data?.message == 'Your account or password is wrong'
+            error?.response?.data?.message ==
+            'Your account or password is wrong'
           ) {
             actionMain.showModal({
               status: true,
@@ -29,9 +31,9 @@ export const signIn = ($action: any) => {
                 'Tài khoản hoặc mật khẩu không chính xác, vui lòng thử lại.',
             });
           }
-
-          return authAction.signInFail(err?.response?.data?.message);
-        });
+          return [authAction.signInFail(error?.response?.data?.message)];
+        }),
+      );
     }),
   );
 };

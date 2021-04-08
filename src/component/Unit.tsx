@@ -113,7 +113,9 @@ const Unit = (props: any) => {
               style={styles.flatList}
             />
           </ScrollView>
-          {isShowListDish && <ListDish navigation={navigation} />}
+          {isShowListDish && (
+            <ListDish navigation={navigation} activeTable={activeTable} />
+          )}
         </>
       )}
     </>

@@ -16,6 +16,8 @@ export const authReducer: any = (state = initState, actions: any) => {
       return {...state, token: payload.data};
     case types.SET_PROFILE_INFO:
       return {...state, profileInfo: payload};
+    case types.CLEAR_AUTH:
+      return {...state, token: '', profileInfo: undefined};
     default:
       return state;
   }

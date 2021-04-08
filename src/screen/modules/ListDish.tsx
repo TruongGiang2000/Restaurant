@@ -9,7 +9,7 @@ import {ButtonCustom} from './../../component';
 import {DummyListDish, mainColors} from '../../contants';
 import {ScrollView} from 'react-native-gesture-handler';
 export const ListDish = (props: any) => {
-  const {style, navigation} = props;
+  const {style, navigation, activeTable} = props;
   const getColorByStatus = (status: string) => {
     switch (status) {
       case 'Hoàn thành':
@@ -63,7 +63,7 @@ export const ListDish = (props: any) => {
         title={'Menu'}
         style={styles.menuButton}
         titleStyle={{fontSize: wp(4)}}
-        onPress={() => navigation.navigate('MyTabs')}
+        onPress={() => navigation.navigate('MyTabs', {activeTable})}
       />
       <ButtonCustom
         title={'Thanh toán'}

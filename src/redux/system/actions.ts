@@ -9,6 +9,7 @@ export const types = {
   GET_MENU_FAIL: 'GET_MENU_FAIL',
   SET_ORDER_FOOD: 'SET_ORDER_FOOD',
   SET_CONNECT_SOCKET: 'SET_CONNECT_SOCKET',
+  CLEAR_ORDER_FOOD: 'CLEAR_ORDER_FOOD',
 };
 const action = (type: string, payload?: any) => ({type, payload});
 export const systemAction = {
@@ -23,4 +24,5 @@ export const systemAction = {
   getMenuFail: (payload: any) => action(types.GET_MENU_FAIL, payload),
   setOrderFood: (payload: any) => action(types.SET_ORDER_FOOD, payload),
   setConnectSocket: (payload: any) => action(types.SET_CONNECT_SOCKET, payload),
+  clearOrderFood: () => action(types.CLEAR_ORDER_FOOD),
 };

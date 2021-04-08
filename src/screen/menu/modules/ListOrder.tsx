@@ -15,7 +15,6 @@ import {ModalOrderFood} from '../modules/ModalOrder';
 import {ScrollView} from 'react-native-gesture-handler';
 const ListOrder = (props: any) => {
   const {orderFood} = props;
-  console.log('orderFood', orderFood);
   const renderItem = ({item}) => {
     return <ModalOrderFood item={item} />;
   };

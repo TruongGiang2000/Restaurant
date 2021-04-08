@@ -1,21 +1,28 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {Login, HomeRoute, SplashScreen, MyTabs} from '../screen';
 import {ListDish} from '../screen/modules';
-import {View, StatusBar, StyleSheet} from 'react-native';
+import {
+  View,
+  StatusBar,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+} from 'react-native';
 import {connect, useSelector} from 'react-redux';
-import {systems, modal} from '../redux';
-import {actionInit} from '../util';
+import {systems, modal, auth} from '../redux';
+import {actionInit, useSocket} from '../util';
 import {IndicatorMain, ModalWarning} from '../component';
 import lodash from 'lodash';
 import {ListOrder} from '../screen/menu/modules';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 const Stack = createStackNavigator();
 const mainRoute = () => {
-  const {splashLoad, listArea} = useSelector((state) => ({
+  const {splashLoad, listArea, token, profileInfo} = useSelector((state) => ({
     splashLoad: state?.systems?.splashLoad,
     listArea: state?.systems?.listArea,
+    token: state?.auth?.token,
+    profileInfo: state?.auth?.profileInfo,
   }));
   return (
     <NavigationContainer>
@@ -39,6 +46,7 @@ const mainRoute = () => {
 };
 const App = (props: any) => {
   const {loading, modal, isConnectSocket} = props;
+  useSocket();
   useEffect(() => {
     actionInit(props);
   }, []);
@@ -59,8 +67,10 @@ const App = (props: any) => {
         barStyle={'dark-content'}
         animated={true}
       />
-      <TouchableOpacity style={styles.btnLogout}></TouchableOpacity>
       {mainRoute()}
+      <TouchableOpacity
+        style={styles.btnLogout}
+        onPress={() => props.clearAuth()}></TouchableOpacity>
       <View
         style={[
           styles.signalSocket,
@@ -80,13 +90,13 @@ export const styles = StyleSheet.create({
     borderRadius: 3,
   },
   btnLogout: {
+    bottom: 0,
+    left: 2,
     width: 50,
     height: 50,
-    backgroundColor: 'red',
+    borderRadius: 3,
     position: 'absolute',
-    left: 0,
-    bottom: 0,
-    zIndex: 99,
+    opacity: 0,
   },
 });
 const mapStateFromProps = (state: any) => {
@@ -96,4 +106,4 @@ const mapStateFromProps = (state: any) => {
     isConnectSocket: state.systems.isConnectSocket,
   };
 };
-export default connect(mapStateFromProps, {...systems, ...modal})(App);
+export default connect(mapStateFromProps, {...systems, ...modal, ...auth})(App);

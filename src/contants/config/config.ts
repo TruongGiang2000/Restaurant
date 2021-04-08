@@ -1,6 +1,5 @@
 import {io} from 'socket.io-client';
+import {useSelector} from 'react-redux';
 export const main = {
-  BASE_URL: 'https://restaurantteam.herokuapp.com/api/', //14.186.103.252:1036
+  BASE_URL: 'https://restaurantteam.herokuapp.com/api/', //https://restaurantteam.herokuapp.com/api/
 };
-
-export const socket = io('https://restaurantteam.herokuapp.com/', {query: {}});

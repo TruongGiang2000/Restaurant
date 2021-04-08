@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {getScreenByList} from '../../util';
+import {getScreenByList, mapOrderFood, useSocket} from '../../util';
 import {Fonts, mainColors, MenuDummy} from '../../contants';
 import ListMenu from './ListMenu';
 import {View, Text, FlatList} from 'react-native';
 import Ripple from 'react-native-material-ripple';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, BackHandler} from 'react-native';
 import {ICON_BACK} from '../../assets';
 import FastImage from 'react-native-fast-image';
 import {
@@ -14,6 +14,7 @@ import {
 } from 'react-native-responsive-screen';
 import {useSelector} from 'react-redux';
 import {ButtonCustom} from '../../component';
+import moment from 'moment';
 const Tab = createMaterialTopTabNavigator();
 
 const Tabs = ({state, descriptors, navigation, position}) => {
@@ -58,8 +59,42 @@ export const MyTabs = (props: any) => {
   const {menu, orderFood, profileInfo} = useSelector((state) => ({
     menu: state?.systems?.menu,
     orderFood: state?.systems?.orderFood,
-    profileInfo: state?.systems?.profileInfo,
+    profileInfo: state?.auth?.profileInfo,
   }));
+  const {activeTable} = props?.route?.params;
+  const socketIo = useSocket();
+  const totalMoney = orderFood.reduce((totalValue, currentValue) => {
+    return totalValue + currentValue?.price[0].valuePrice;
+  }, 0);
+  const orderFoods = mapOrderFood(orderFood);
+  const siteId = profileInfo?.siteId;
+  const storeId = profileInfo?.storeId;
+
+  const emitDataOrderFood = () => {
+    const dataEmit = {
+      query: {
+        tables: [Object.values(activeTable)[0]],
+      },
+      body: {
+        tables: [Object.values(activeTable)[0]],
+        totalMoney,
+        status: 1,
+        createdBy: profileInfo?._id,
+        noteGenerous: '',
+        orderFoods,
+        siteId,
+        storeId,
+      },
+    };
+    socketIo.emit('L-S-AddOrderItems', {
+      ...dataEmit,
+    });
+    props?.navigation?.navigate('Home');
+  };
+  BackHandler.addEventListener('hardwareBackPress', () => {
+    props?.navigation?.navigate('Home');
+    return true;
+  });
   return (
     <>
       <View style={styles.header}>
@@ -87,7 +122,11 @@ export const MyTabs = (props: any) => {
         tabBar={Tabs}>
         {getScreenByList(Tab, menu, ListMenu, {})}
       </Tab.Navigator>
-      <ButtonCustom title={'Xác nhận'} style={styles.btnConfirm} />
+      <ButtonCustom
+        title={'Xác nhận'}
+        style={styles.btnConfirm}
+        onPress={() => emitDataOrderFood()}
+      />
     </>
   );
 };

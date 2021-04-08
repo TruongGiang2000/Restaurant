@@ -1,5 +1,5 @@
 import {types} from './actions';
-
+import {types as typesAction} from '../auth/actions';
 const initState = {
   loading: false,
   listArea: [],
@@ -40,6 +40,11 @@ export const systemsReducer: any = (state = initState, actions: any) => {
         ...state,
         isConnectSocket: payload,
       };
+    case typesAction.CLEAR_AUTH:
+      return {...state, listArea: []};
+    case types.CLEAR_ORDER_FOOD: {
+      return {...state, orderFood: []};
+    }
     default:
       return state;
   }
