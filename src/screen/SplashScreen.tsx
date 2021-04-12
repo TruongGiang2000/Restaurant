@@ -17,7 +17,14 @@ import lodash from 'lodash';
 const SplashScreen = (props: any) => {
   const [syncMessage, setSyncMessage] = useState('');
   const [codePushSuccess, setCodePushSuccess] = useState(false);
-  const {getListArea, profileInfo, setSplashLoad, listArea, getMenu} = props;
+  const {
+    getListArea,
+    profileInfo,
+    setSplashLoad,
+    listArea,
+    getMenu,
+    getAllOrder,
+  } = props;
   const loadingApp = () => {
     setCodePushSuccess(true);
   };
@@ -60,7 +67,7 @@ const SplashScreen = (props: any) => {
         break;
       case CodePush.SyncStatus.UP_TO_DATE:
       default:
-        setSyncMessage('ɚ 0.7');
+        setSyncMessage('ɚ 0.8');
         loadingApp();
         break;
     }
@@ -70,6 +77,7 @@ const SplashScreen = (props: any) => {
       const data = {site: profileInfo?.siteId, store: profileInfo?.storeId};
       getListArea(data);
       getMenu(data);
+      getAllOrder(data);
     }
   }, [profileInfo]);
   const isSetSplashLoad = profileInfo ? !lodash.isEmpty(listArea) : true;

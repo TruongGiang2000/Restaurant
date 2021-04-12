@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, FlatList, View, Text, ScrollView} from 'react-native';
+import {StyleSheet, FlatList, View, Text, BackHandler} from 'react-native';
 import {mainColors} from '../../contants';
 import {
   widthPercentageToDP as wp,
@@ -31,6 +31,10 @@ const ListMenu = (props: any) => {
     );
   };
   const isNullOrder = orderFood?.length == 0;
+  BackHandler.addEventListener('hardwareBackPress', () => {
+    props?.navigation?.navigate('Home');
+    return true;
+  });
   return (
     <BackgroundSmall style={{justifyContent: 'flex-end'}}>
       <Ripple

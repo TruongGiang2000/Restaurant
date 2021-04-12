@@ -5,7 +5,7 @@ import {Fonts, mainColors, MenuDummy} from '../../contants';
 import ListMenu from './ListMenu';
 import {View, Text, FlatList} from 'react-native';
 import Ripple from 'react-native-material-ripple';
-import {StyleSheet, BackHandler} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {ICON_BACK} from '../../assets';
 import FastImage from 'react-native-fast-image';
 import {
@@ -14,7 +14,6 @@ import {
 } from 'react-native-responsive-screen';
 import {useSelector} from 'react-redux';
 import {ButtonCustom} from '../../component';
-import moment from 'moment';
 const Tab = createMaterialTopTabNavigator();
 
 const Tabs = ({state, descriptors, navigation, position}) => {
@@ -91,10 +90,7 @@ export const MyTabs = (props: any) => {
     });
     props?.navigation?.navigate('Home');
   };
-  BackHandler.addEventListener('hardwareBackPress', () => {
-    props?.navigation?.navigate('Home');
-    return true;
-  });
+
   return (
     <>
       <View style={styles.header}>

@@ -12,7 +12,7 @@ import FastImage from 'react-native-fast-image';
 import {connect} from 'react-redux';
 import {ListDish} from '../screen/modules';
 import lodash from 'lodash';
-import {getColorByStatus} from '../util';
+import {getColorByStatus, getOrderByTable} from '../util';
 import {ScrollView} from 'react-native-gesture-handler';
 const Unit = (props: any) => {
   const {
@@ -78,6 +78,8 @@ const Unit = (props: any) => {
     );
   };
   const isShowListDish = !lodash?.isEmpty(activeTable);
+  const idTable = isShowListDish ? Object.values(activeTable)[0] : '';
+  const listOrderDish = getOrderByTable(idTable);
   return (
     <>
       <View style={[styles.MainContainer, style]}>

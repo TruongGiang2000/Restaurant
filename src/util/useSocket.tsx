@@ -2,6 +2,7 @@ import {useEffect, useMemo} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {io} from 'socket.io-client';
 import {systemAction} from '../redux/system/actions';
+export let socketIo = io('https://restaurantteam.herokuapp.com');
 export const useSocket = () => {
   const token = useSelector((state) => state?.auth?.token);
   const dispatch = useDispatch();
@@ -9,13 +10,13 @@ export const useSocket = () => {
     if (!token) {
       return;
     }
-    const socketCache = io('https://restaurantteam.herokuapp.com', {
+    socketIo = io('https://restaurantteam.herokuapp.com', {
       query: {
         token,
       },
       autoConnect: true,
     });
-    return socketCache;
+    return socketIo;
   }, [token]);
   useEffect(() => {
     if (!token) {

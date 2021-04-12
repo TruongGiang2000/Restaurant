@@ -18,12 +18,14 @@ import lodash from 'lodash';
 import {ListOrder} from '../screen/menu/modules';
 const Stack = createStackNavigator();
 const mainRoute = () => {
-  const {splashLoad, listArea, token, profileInfo} = useSelector((state) => ({
-    splashLoad: state?.systems?.splashLoad,
-    listArea: state?.systems?.listArea,
-    token: state?.auth?.token,
-    profileInfo: state?.auth?.profileInfo,
-  }));
+  const {splashLoad, listArea, token, profileInfo} = useSelector(
+    (state: any) => ({
+      splashLoad: state.systems.splashLoad,
+      listArea: state?.systems?.listArea,
+      token: state?.auth?.token,
+      profileInfo: state?.auth?.profileInfo,
+    }),
+  );
   return (
     <NavigationContainer>
       <Stack.Navigator headerMode={'none'}>

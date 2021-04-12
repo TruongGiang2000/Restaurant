@@ -7,6 +7,7 @@ const initState = {
   menu: [],
   orderFood: [],
   isConnectSocket: false,
+  orderTableAll: [],
 };
 export const systemsReducer: any = (state = initState, actions: any) => {
   const {payload} = actions;
@@ -45,6 +46,15 @@ export const systemsReducer: any = (state = initState, actions: any) => {
     case types.CLEAR_ORDER_FOOD: {
       return {...state, orderFood: []};
     }
+    case types.GET_ALL_ORDER:
+      return {
+        ...state,
+        orderTableAll: [],
+      };
+    case types.GET_ALL_ORDER_SUCCESS:
+      return {...state, orderTableAll: payload};
+    case types.GET_ALL_ORDER_FAIL:
+      return {...state, orderTableAll: []};
     default:
       return state;
   }
