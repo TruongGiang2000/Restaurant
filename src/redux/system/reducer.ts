@@ -1,4 +1,5 @@
 import {types} from './actions';
+import lodash from 'lodash';
 import {types as typesAction} from '../auth/actions';
 const initState = {
   loading: false,
@@ -55,6 +56,25 @@ export const systemsReducer: any = (state = initState, actions: any) => {
       return {...state, orderTableAll: payload};
     case types.GET_ALL_ORDER_FAIL:
       return {...state, orderTableAll: []};
+    case types.UPDATE_ORDER_TABLE: {
+      const firstItem = lodash.get(payload, '[0]', {});
+      const table = lodash.get(firstItem?.tables, '[0]', {});
+      const indexTable = state.orderTableAll.findIndex((it) => {
+        const firstTable = lodash.get(it?.tables, '[0]', {});
+        return firstTable._id == table?._id;
+      });
+      console.log('indexTable', indexTable);
+      if (indexTable == -1) {
+        return {
+          ...state,
+          orderTableAll: state.orderTableAll.concat(firstItem),
+        };
+      }
+      state.orderTableAll.splice(indexTable, 1, firstItem);
+      return {
+        ...state,
+      };
+    }
     default:
       return state;
   }

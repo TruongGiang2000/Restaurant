@@ -4,7 +4,7 @@ import {io} from 'socket.io-client';
 import {systemAction} from '../redux/system/actions';
 export let socketIo = io('https://restaurantteam.herokuapp.com');
 export const useSocket = () => {
-  const token = useSelector((state) => state?.auth?.token);
+  const token = useSelector((state: any) => state?.auth?.token);
   const dispatch = useDispatch();
   const socket = useMemo(() => {
     if (!token) {
@@ -31,7 +31,10 @@ export const useSocket = () => {
       console.log('disconnect');
       dispatch(systemAction.setConnectSocket(false));
     });
-    socket.on('S-L-OrderById', (data) => console.log('OrderById', data));
+    socketIo.on('S-L-OrderById', (data) => {
+      console.log('OrderById', data);
+      dispatch(systemAction.updateOrderTable(data?.data?.data));
+    });
     return () => {};
   }, [token]);
   return socket;

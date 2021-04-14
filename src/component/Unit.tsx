@@ -116,7 +116,11 @@ const Unit = (props: any) => {
             />
           </ScrollView>
           {isShowListDish && (
-            <ListDish navigation={navigation} activeTable={activeTable} />
+            <ListDish
+              navigation={navigation}
+              activeTable={activeTable}
+              listOrderDish={listOrderDish}
+            />
           )}
         </>
       )}

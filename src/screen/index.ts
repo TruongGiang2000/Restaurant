@@ -1,4 +1,4 @@
 export * from './home';
 export {default as Login} from './login';
 export {default as SplashScreen} from './SplashScreen';
-export * from './menu';
+export {default as MyTabs} from './menu';

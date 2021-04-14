@@ -8,8 +8,9 @@ import {Fonts} from '../../contants';
 import {ButtonCustom} from './../../component';
 import {DummyListDish, mainColors} from '../../contants';
 import {ScrollView} from 'react-native-gesture-handler';
+import lodash from 'lodash';
 export const ListDish = (props: any) => {
-  const {style, navigation, activeTable} = props;
+  const {style, navigation, activeTable, listOrderDish} = props;
   const getColorByStatus = (status: string) => {
     switch (status) {
       case 'Hoàn thành':
@@ -42,33 +43,46 @@ export const ListDish = (props: any) => {
       </View>
     );
   };
+
+  const navigateMenu = () => navigation.navigate('MyTabs', {activeTable});
+
+  const emptyOrder = lodash.isEmpty(listOrderDish);
   return (
     <View style={[styles.MainContainer, style]}>
-      <View style={styles.viewRowHeader}>
-        <Text style={[styles.titleHeader, {textAlign: 'left'}]}>Món</Text>
-        <Text style={styles.titleHeader}>Số lượng</Text>
-        <Text style={styles.titleHeader}>Giá</Text>
-        <Text style={styles.titleHeader}>Trạng thái</Text>
-      </View>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <FlatList
-          data={DummyListDish}
-          renderItem={renderItem}
-          scrollEnabled={false}
-          keyExtractor={(item, index) => `${item}${index}`}
-          listKey={'ListDishUniKey'}
+      {emptyOrder ? (
+        <Text style={styles.noFoodTxt}>Bàn này chưa có món</Text>
+      ) : (
+        <>
+          <View style={styles.viewRowHeader}>
+            <Text style={[styles.titleHeader, {textAlign: 'left'}]}>Món</Text>
+            <Text style={styles.titleHeader}>Số lượng</Text>
+            <Text style={styles.titleHeader}>Giá</Text>
+            <Text style={styles.titleHeader}>Trạng thái</Text>
+          </View>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <FlatList
+              data={listOrderDish}
+              renderItem={renderItem}
+              scrollEnabled={false}
+              keyExtractor={(item, index) => `${item}${index}`}
+              listKey={'ListDishUniKey'}
+            />
+          </ScrollView>
+        </>
+      )}
+      {!emptyOrder && (
+        <ButtonCustom
+          title={'Menu'}
+          style={styles.menuButton}
+          titleStyle={{fontSize: wp(4)}}
+          onPress={navigateMenu}
         />
-      </ScrollView>
+      )}
       <ButtonCustom
-        title={'Menu'}
-        style={styles.menuButton}
-        titleStyle={{fontSize: wp(4)}}
-        onPress={() => navigation.navigate('MyTabs', {activeTable})}
-      />
-      <ButtonCustom
-        title={'Thanh toán'}
+        title={emptyOrder ? 'Đặt món' : 'Thanh toán'}
         style={styles.styleButton}
         titleStyle={styles.titleButtonStyle}
+        onPress={emptyOrder ? navigateMenu : undefined}
       />
     </View>
   );
@@ -79,7 +93,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#333333',
     borderRadius: wp('2'),
-    maxHeight: hp('50'),
+    height: hp('50'),
     width: wp('90'),
     alignSelf: 'center',
     marginVertical: hp('2'),
@@ -162,6 +176,13 @@ const styles = StyleSheet.create({
     bottom: hp(6),
     right: wp(2),
     zIndex: 9999,
+  },
+  noFoodTxt: {
+    fontFamily: Fonts.Roboto_Slab_Regular,
+    fontSize: wp(4),
+    color: mainColors.blackColor,
+    alignSelf: 'center',
+    marginBottom: hp(20),
   },
 });
 const RenderTextRow = (props: any) => {

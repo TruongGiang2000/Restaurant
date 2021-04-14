@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {getScreenByList, mapOrderFood, useSocket} from '../../util';
 import {Fonts, mainColors, MenuDummy} from '../../contants';
@@ -12,8 +12,10 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {useSelector} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import {ButtonCustom} from '../../component';
+import {socketIo} from '../../util';
+import {systems} from '../../redux';
 const Tab = createMaterialTopTabNavigator();
 
 const Tabs = ({state, descriptors, navigation, position}) => {
@@ -54,14 +56,13 @@ const Tabs = ({state, descriptors, navigation, position}) => {
     </View>
   );
 };
-export const MyTabs = (props: any) => {
-  const {menu, orderFood, profileInfo} = useSelector((state) => ({
+const MyTabs = (props: any) => {
+  const {menu, orderFood, profileInfo} = useSelector((state: any) => ({
     menu: state?.systems?.menu,
     orderFood: state?.systems?.orderFood,
     profileInfo: state?.auth?.profileInfo,
   }));
   const {activeTable} = props?.route?.params;
-  const socketIo = useSocket();
   const totalMoney = orderFood.reduce((totalValue, currentValue) => {
     return totalValue + currentValue?.price[0].valuePrice;
   }, 0);
@@ -88,6 +89,7 @@ export const MyTabs = (props: any) => {
     socketIo.emit('L-S-AddOrderItems', {
       ...dataEmit,
     });
+    props.clearOrderFood();
     props?.navigation?.navigate('Home');
   };
 
@@ -121,11 +123,12 @@ export const MyTabs = (props: any) => {
       <ButtonCustom
         title={'Xác nhận'}
         style={styles.btnConfirm}
-        onPress={() => emitDataOrderFood()}
+        onPress={emitDataOrderFood}
       />
     </>
   );
 };
+export default connect(null, systems)(MyTabs);
 const styles = StyleSheet.create({
   header: {
     backgroundColor: '#3E8A4F',

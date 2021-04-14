@@ -9,7 +9,6 @@ export const getOrderByTable = (idTable: any) => {
   const orderTableAll = useSelector(
     (state: any) => state?.systems?.orderTableAll,
   );
-  console.log('orderTableAll', orderTableAll);
   const indexFind = orderTableAll?.findIndex((it) => it?._id == idTable);
   return indexFind != -1 ? orderTableAll[indexFind] : {};
 };

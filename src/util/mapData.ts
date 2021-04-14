@@ -17,11 +17,13 @@ export const mapDataListTable = (data: any) => {
   return dataMain;
 };
 export const mapOrderFood = (data: any) => {
-  data?.map((it) => {
-    it.sll;
-    it.process = it.status;
-    it.foodItem = it?._id;
-    it.typePrice = it?.price[0].typePrice;
-    it.noteDetail = it?.note;
+  return data?.map((it) => {
+    let _it;
+    _it = it.sll;
+    _it = it.process = it.status;
+    _it = it.foodItem = it?._id;
+    _it = it.typePrice = it?.price[0].typePrice;
+    _it = it.noteDetail = it?.note;
+    return _it;
   });
 };
