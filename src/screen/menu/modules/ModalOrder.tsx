@@ -38,10 +38,7 @@ export const ModalOrderFood = (props: any) => {
       const activeSize = it?.key == size;
       return (
         <TouchableOpacity
-          style={[
-            styles.sizeView,
-            activeSize && {backgroundColor: mainColors.mainColor},
-          ]}
+          style={[styles.sizeView, activeSize && {backgroundColor: '#EFBB64'}]}
           key={`${it?.key}${index}`}
           onPress={() => setSizeFunc(it?.key)}>
           <Text
@@ -116,7 +113,7 @@ export const ModalOrderFood = (props: any) => {
           style={[
             styles.viewImageModal,
             {
-              bottom: isNumberHeight ? heightModal - hp(3) : hp(33),
+              bottom: isNumberHeight ? heightModal - hp(5) : hp(33),
             },
           ]}>
           <FastImage
@@ -131,6 +128,10 @@ export const ModalOrderFood = (props: any) => {
           onLayout={({nativeEvent}) =>
             setHeightModal(nativeEvent.layout.height)
           }>
+          <FastImage
+            source={require('../../../assets/images/ModalDish.png')}
+            style={StyleSheet.absoluteFillObject}
+          />
           <View style={{paddingHorizontal: wp(4)}}>
             <View style={styles.rowSpaceBetween}>
               <Text style={styles.nameFoodModal}>{item?.foodName}</Text>
@@ -182,7 +183,7 @@ export const ModalOrderFood = (props: any) => {
           </View>
           <ButtonCustom
             title={'Đặt món'}
-            titleStyle={{fontSize: wp(5)}}
+            titleStyle={{fontSize: wp(5), color: mainColors.blackColor}}
             style={styles.btnOrder}
             onPress={pushItem}
           />
@@ -197,30 +198,26 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   container: {
-    backgroundColor: '#fff',
     width: wp(100),
-    borderWidth: 2,
-    borderColor: '#000',
     paddingTop: hp(3),
-    borderTopLeftRadius: wp(4),
-    borderTopRightRadius: wp(4),
+    height: wp(100) * 0.841982235,
   },
   nameFoodModal: {
-    color: mainColors.blackColor,
+    color: mainColors.whiteColor,
     fontFamily: Fonts.Roboto_Stab_Bold,
     fontSize: wp(4),
     width: '60%',
   },
   titleModal: {
     fontSize: wp(4),
-    color: mainColors.blackColor,
+    color: mainColors.whiteColor,
     fontFamily: Fonts.Roboto_Slab_Regular,
   },
   viewImageModal: {
     width: wp(26),
     height: wp(28),
-    borderWidth: 2,
-    borderColor: mainColors.blackColor,
+    borderWidth: 4,
+    borderColor: mainColors.whiteColor,
     overflow: 'hidden',
     borderRadius: wp(2),
     zIndex: 999,
@@ -237,6 +234,7 @@ const styles = StyleSheet.create({
     borderRadius: wp(1),
     paddingVertical: wp(0.5),
     marginStart: wp(4),
+    backgroundColor: mainColors.whiteColor,
   },
 
   controlSll: {
@@ -245,7 +243,7 @@ const styles = StyleSheet.create({
   },
   sllText: {
     fontSize: wp(4),
-    color: mainColors.mainColor,
+    color: mainColors.blackColor,
     marginHorizontal: wp(2),
     fontFamily: Fonts.Roboto_Stab_Bold,
   },
@@ -263,6 +261,7 @@ const styles = StyleSheet.create({
   rowSpaceBetween: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginTop: hp(5),
   },
   sizeView: {
     alignItems: 'center',
@@ -273,6 +272,7 @@ const styles = StyleSheet.create({
     paddingVertical: wp(1),
     marginStart: wp(2.5),
     paddingHorizontal: wp(2),
+    backgroundColor: mainColors.whiteColor,
   },
   sizeTitle: {
     fontFamily: Fonts.Roboto_Slab_Light,
@@ -286,6 +286,7 @@ const styles = StyleSheet.create({
     marginTop: hp(1),
     marginBottom: hp(1.5),
     marginHorizontal: wp(1.5),
+    backgroundColor: mainColors.whiteColor,
   },
   viewImgItem: {
     width: wp(25),
