@@ -17,7 +17,7 @@ const ListMenu = (props: any) => {
   const setItem = (item) => {
     props.setOrderFood(item);
   };
-  const {orderFood} = useSelector((state) => ({
+  const {orderFood} = useSelector((state: any) => ({
     orderFood: state?.systems?.orderFood,
   }));
   const renderItem = ({item, index}) => {

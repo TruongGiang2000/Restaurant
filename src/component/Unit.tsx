@@ -80,6 +80,7 @@ const Unit = (props: any) => {
   const isShowListDish = !lodash?.isEmpty(activeTable);
   const idTable = isShowListDish ? Object.values(activeTable)[0] : '';
   const listOrderDish = getOrderByTable(idTable);
+  console.log('listOrderDish', listOrderDish, idTable);
   return (
     <>
       <View style={[styles.MainContainer, style]}>
@@ -178,6 +179,6 @@ const styles = StyleSheet.create({
   },
 });
 const mapStateFromProps = (state: any) => {
-  return {};
+  return {orderTableAll: state?.systems?.orderTableAll};
 };
 export default connect(mapStateFromProps, null)(Unit);

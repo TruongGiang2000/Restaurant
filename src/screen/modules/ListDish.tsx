@@ -6,39 +6,32 @@ import {
 } from 'react-native-responsive-screen';
 import {Fonts} from '../../contants';
 import {ButtonCustom} from './../../component';
-import {DummyListDish, mainColors} from '../../contants';
+import {mainColors} from '../../contants';
 import {ScrollView} from 'react-native-gesture-handler';
 import lodash from 'lodash';
+import {getColorByStatusOrder, getStatusTextOrder} from '../../util';
 export const ListDish = (props: any) => {
   const {style, navigation, activeTable, listOrderDish} = props;
-  const getColorByStatus = (status: string) => {
-    switch (status) {
-      case 'Hoàn thành':
-        return '#3E8A4F';
-      case 'Đang đợi':
-        return '#F3E205';
-      default:
-        return '#ED1F24';
-    }
-  };
+
   const renderItem = ({item}) => {
-    const isComplete = item.status == 'Hoàn thành';
+    const isComplete =
+      item.waitingQuantity == 0 && item?.completedQuantity != 0;
     return (
       <View style={styles.viewRowHeader}>
-        <Text style={styles.mealStyle}>{item?.meal}</Text>
+        <Text style={styles.mealStyle}>{item?.foodItem?.foodName}</Text>
         {isComplete ? (
-          <Text style={styles.completeStyle}>{item?.sllComplete}</Text>
+          <Text style={styles.completeStyle}>{item?.completedQuantity}</Text>
         ) : (
           <RenderTextRow data={item} />
         )}
-        <Text style={styles.priceStyle}>{item?.price}</Text>
+        <Text style={styles.priceStyle}>{item?.typePrice?.valuePrice}</Text>
         <Text
           style={[
             styles.statusStyle,
-            {backgroundColor: getColorByStatus(item?.status)},
+            {backgroundColor: getColorByStatusOrder(item)},
           ]}
           numberOfLines={2}>
-          {item?.status}
+          {getStatusTextOrder(item)}
         </Text>
       </View>
     );
@@ -61,7 +54,7 @@ export const ListDish = (props: any) => {
           </View>
           <ScrollView showsVerticalScrollIndicator={false}>
             <FlatList
-              data={listOrderDish}
+              data={listOrderDish?.orderFoods}
               renderItem={renderItem}
               scrollEnabled={false}
               keyExtractor={(item, index) => `${item}${index}`}
@@ -187,17 +180,19 @@ const styles = StyleSheet.create({
 });
 const RenderTextRow = (props: any) => {
   const {data} = props;
+  const sllCancel =
+    data?.orderQuantity - (data?.completedQuantity + data?.waitingQuantity);
   return (
     <View style={styles.viewRow}>
-      <Text style={[styles.sllStyle, {color: '#F2DC10'}]}>{data?.sllWait}</Text>
+      <Text style={[styles.sllStyle, {color: '#F2DC10'}]}>
+        {data?.waitingQuantity}
+      </Text>
       <Text style={[styles.sllStyle, {color: mainColors.blackColor}]}>/</Text>
       <Text style={[styles.sllStyle, {color: '#7AC144'}]}>
-        {data?.sllComplete}
+        {data?.completedQuantity}
       </Text>
       <Text style={[styles.sllStyle, {color: mainColors.blackColor}]}>/</Text>
-      <Text style={[styles.sllStyle, {color: '#EC2326'}]}>
-        {data?.sllCancel}
-      </Text>
+      <Text style={[styles.sllStyle, {color: '#EC2326'}]}>{sllCancel}</Text>
     </View>
   );
 };

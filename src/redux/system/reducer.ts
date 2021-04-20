@@ -63,14 +63,17 @@ export const systemsReducer: any = (state = initState, actions: any) => {
         const firstTable = lodash.get(it?.tables, '[0]', {});
         return firstTable._id == table?._id;
       });
-      console.log('indexTable', indexTable);
       if (indexTable == -1) {
         return {
           ...state,
           orderTableAll: state.orderTableAll.concat(firstItem),
         };
       }
-      state.orderTableAll.splice(indexTable, 1, firstItem);
+      const tableIndex = state.orderTableAll[indexTable];
+      const orderFoods = tableIndex?.orderFoods?.concat(firstItem?.orderFoods);
+      firstItem?.orderFoods?.concat(tableIndex?.orderFoods);
+      const itemFinal = {...firstItem, orderFoods};
+      state.orderTableAll.splice(indexTable, 1, itemFinal);
       return {
         ...state,
       };

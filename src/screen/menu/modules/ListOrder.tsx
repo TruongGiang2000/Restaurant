@@ -11,12 +11,12 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {mainColors, Fonts} from '../../../contants';
-import {ModalOrderFood} from '../modules/ModalOrder';
+import {ModalUpdateFood} from '../modules';
 import {ScrollView} from 'react-native-gesture-handler';
 const ListOrder = (props: any) => {
   const {orderFood} = props;
   const renderItem = ({item}) => {
-    return <ModalOrderFood item={item} />;
+    return <ModalUpdateFood item={item} />;
   };
   return (
     <BackgroundSmall>

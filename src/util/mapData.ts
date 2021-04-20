@@ -18,12 +18,15 @@ export const mapDataListTable = (data: any) => {
 };
 export const mapOrderFood = (data: any) => {
   return data?.map((it) => {
-    let _it;
-    _it = it.sll;
-    _it = it.process = it.status;
-    _it = it.foodItem = it?._id;
-    _it = it.typePrice = it?.price[0].typePrice;
-    _it = it.noteDetail = it?.note;
+    const _it = {
+      orderQuantity: it.sll,
+      process: it.status,
+      foodItem: it?._id,
+      typePrice: it?.price[0]._id,
+      noteDetail: it?.note,
+      waitingQuantity: it.sll,
+      completedQuantity: 0,
+    };
     return _it;
   });
 };
