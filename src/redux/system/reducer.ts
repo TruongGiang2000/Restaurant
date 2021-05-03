@@ -78,6 +78,9 @@ export const systemsReducer: any = (state = initState, actions: any) => {
         ...state,
       };
     }
+    case types.UPDATE_ORDER_FOOD:
+      return {...state, orderFood: payload};
+
     default:
       return state;
   }

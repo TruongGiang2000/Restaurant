@@ -1,4 +1,4 @@
-import React, {useRef, useState, useEffect} from 'react';
+import React, {useRef, useState} from 'react';
 import {View, StyleSheet, Text, FlatList} from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -80,7 +80,6 @@ const Unit = (props: any) => {
   const isShowListDish = !lodash?.isEmpty(activeTable);
   const idTable = isShowListDish ? Object.values(activeTable)[0] : '';
   const listOrderDish = getOrderByTable(idTable);
-  console.log('listOrderDish', listOrderDish, idTable);
   return (
     <>
       <View style={[styles.MainContainer, style]}>
@@ -121,6 +120,7 @@ const Unit = (props: any) => {
               navigation={navigation}
               activeTable={activeTable}
               listOrderDish={listOrderDish}
+              idTable={idTable}
             />
           )}
         </>

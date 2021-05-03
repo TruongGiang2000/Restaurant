@@ -93,12 +93,15 @@ const MyTabs = (props: any) => {
     props?.navigation?.navigate('Home');
   };
 
+  const goBack = () => {
+    props?.navigation?.goBack();
+    props.clearOrderFood();
+  };
+
   return (
     <>
       <View style={styles.header}>
-        <Ripple
-          style={styles.iconBack}
-          onPress={() => props?.navigation?.goBack()}>
+        <Ripple style={styles.iconBack} onPress={goBack}>
           <FastImage
             source={ICON_BACK}
             style={StyleSheet.absoluteFillObject}

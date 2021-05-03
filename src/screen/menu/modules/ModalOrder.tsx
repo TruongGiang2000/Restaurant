@@ -14,7 +14,7 @@ import {
 } from 'react-native-responsive-screen';
 import Modal from 'react-native-modal';
 import {ButtonCustom} from '../../../component';
-import {MENU_INFO, STATUS_OVER} from '../../../assets';
+import {MENU_INFO, MODAL_DISH, STATUS_OVER} from '../../../assets';
 export const ModalOrderFood = (props: any) => {
   const [showModal, setShowModal] = useState(false);
   const [heightModal, setHeightModal] = useState(0);
@@ -129,7 +129,7 @@ export const ModalOrderFood = (props: any) => {
             setHeightModal(nativeEvent.layout.height)
           }>
           <FastImage
-            source={require('../../../assets/images/ModalDish.png')}
+            source={MODAL_DISH}
             style={StyleSheet.absoluteFillObject}
           />
           <View style={{paddingHorizontal: wp(4)}}>

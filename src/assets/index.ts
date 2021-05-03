@@ -11,3 +11,6 @@ export const ICON_BACK = require('./images/iconBack.png');
 export const MENU_INFO = require('./images/menuInfo.png');
 export const STATUS_OVER = require('./images/statusOver.png');
 export const DISH_STORE = require('./images/servingDish.png');
+export const ORDER_SLL = require('./images/orderSll.png');
+export const MODAL_DISH = require('./images/ModalDish.png');
+export const ORDER_SIZE = require('./images/orderSize.png');

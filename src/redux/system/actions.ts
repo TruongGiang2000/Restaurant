@@ -14,6 +14,7 @@ export const types = {
   GET_ALL_ORDER_SUCCESS: 'GET_ALL_ORDER_SUCCESS',
   GET_ALL_ORDER_FAIL: 'GET_ALL_ORDER_FAIL',
   UPDATE_ORDER_TABLE: 'UPDATE_ORDER_TABLE',
+  UPDATE_ORDER_FOOD: 'UPDATE_ORDER_FOOD',
 };
 const action = (type: string, payload?: any) => ({type, payload});
 export const systemAction = {
@@ -34,4 +35,5 @@ export const systemAction = {
     action(types.GET_ALL_ORDER_SUCCESS, payload),
   getAllOrderFail: (payload: any) => action(types.GET_ALL_ORDER_FAIL, payload),
   updateOrderTable: (payload: any) => action(types.UPDATE_ORDER_TABLE, payload),
+  updateOrderFood: (payload: any) => action(types.UPDATE_ORDER_FOOD, payload),
 };

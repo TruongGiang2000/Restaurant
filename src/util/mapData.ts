@@ -19,13 +19,29 @@ export const mapDataListTable = (data: any) => {
 export const mapOrderFood = (data: any) => {
   return data?.map((it) => {
     const _it = {
-      orderQuantity: it.sll,
-      process: it.status,
+      orderQuantity: it?.sll,
+      process: 1,
       foodItem: it?._id,
       typePrice: it?.price[0]._id,
       noteDetail: it?.note,
-      waitingQuantity: it.sll,
+      waitingQuantity: it?.sll,
       completedQuantity: 0,
+    };
+    return _it;
+  });
+};
+export const mapUpdateOrderFood = (
+  data: any,
+  typeAction: 0 | 1,
+  sll: number,
+) => {
+  return data?.map((it) => {
+    const completedQuantity = typeAction == 0 ? 0 : sll;
+    const _it = {
+      ...it,
+      process: 2,
+      waitingQuantity: it?.orderQuantity - sll,
+      completedQuantity: completedQuantity,
     };
     return _it;
   });

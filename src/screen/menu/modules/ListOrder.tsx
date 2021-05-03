@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet, Text, FlatList} from 'react-native';
 import {connect} from 'react-redux';
 import {BackgroundSmall, ButtonCustom} from '../../../component';
@@ -13,17 +13,42 @@ import {
 import {mainColors, Fonts} from '../../../contants';
 import {ModalUpdateFood} from '../modules';
 import {ScrollView} from 'react-native-gesture-handler';
+import lodash from 'lodash';
 const ListOrder = (props: any) => {
-  const {orderFood} = props;
+  const {orderFood, updateOrderFood} = props;
+  const _orderFood = lodash.cloneDeep(orderFood);
+  const [orderFoodCache, setOrderFoodCache] = useState<any>(_orderFood);
   const renderItem = ({item}) => {
-    return <ModalUpdateFood item={item} />;
+    return (
+      <ModalUpdateFood
+        item={item}
+        updateOrderFoodCache={updateOrderFoodCache}
+      />
+    );
   };
+  const updateOrderFoodCache = (valueOrder) => {
+    const orderIndex = orderFoodCache?.findIndex(
+      (it) => it?._id == valueOrder?._id,
+    );
+    setOrderFoodCache((state) => {
+      state?.splice(orderIndex, 1, valueOrder);
+      return [...state];
+    });
+  };
+
+  const goBack = () => {
+    props?.navigation?.goBack();
+  };
+
+  const updateFoodMain = () => {
+    updateOrderFood(orderFoodCache);
+    props?.navigation?.goBack();
+  };
+
   return (
     <BackgroundSmall>
       <View style={styles.header}>
-        <Ripple
-          style={styles.iconBack}
-          onPress={() => props?.navigation?.goBack()}>
+        <Ripple style={styles.iconBack} onPress={goBack}>
           <FastImage
             source={ICON_BACK}
             style={StyleSheet.absoluteFillObject}
@@ -39,17 +64,18 @@ const ListOrder = (props: any) => {
       </View>
       <ScrollView>
         <FlatList
-          data={orderFood}
+          data={orderFoodCache}
           renderItem={renderItem}
           style={{marginLeft: wp(4), marginTop: hp(2)}}
           scrollEnabled={false}
           showsVerticalScrollIndicator={false}
+          extraData={orderFoodCache}
         />
       </ScrollView>
       <ButtonCustom
-        title={'Xác nhận'}
+        title={'Cập nhật'}
         style={styles.btnConfirm}
-        onPress={() => props?.navigation?.goBack()}
+        onPress={updateFoodMain}
       />
     </BackgroundSmall>
   );

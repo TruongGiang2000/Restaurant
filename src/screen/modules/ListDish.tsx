@@ -9,32 +9,12 @@ import {ButtonCustom} from './../../component';
 import {mainColors} from '../../contants';
 import {ScrollView} from 'react-native-gesture-handler';
 import lodash from 'lodash';
-import {getColorByStatusOrder, getStatusTextOrder} from '../../util';
+import {ItemLishDist} from './ItemListDish';
 export const ListDish = (props: any) => {
-  const {style, navigation, activeTable, listOrderDish} = props;
+  const {style, navigation, activeTable, listOrderDish, idTable} = props;
 
   const renderItem = ({item}) => {
-    const isComplete =
-      item.waitingQuantity == 0 && item?.completedQuantity != 0;
-    return (
-      <View style={styles.viewRowHeader}>
-        <Text style={styles.mealStyle}>{item?.foodItem?.foodName}</Text>
-        {isComplete ? (
-          <Text style={styles.completeStyle}>{item?.completedQuantity}</Text>
-        ) : (
-          <RenderTextRow data={item} />
-        )}
-        <Text style={styles.priceStyle}>{item?.typePrice?.valuePrice}</Text>
-        <Text
-          style={[
-            styles.statusStyle,
-            {backgroundColor: getColorByStatusOrder(item)},
-          ]}
-          numberOfLines={2}>
-          {getStatusTextOrder(item)}
-        </Text>
-      </View>
-    );
+    return <ItemLishDist item={item} idTable={idTable} />;
   };
 
   const navigateMenu = () => navigation.navigate('MyTabs', {activeTable});
@@ -99,27 +79,20 @@ const styles = StyleSheet.create({
     paddingVertical: hp('0.6'),
     borderRadius: 0,
   },
-  titleButtonStyle: {
-    fontSize: wp('4.5'),
-  },
   viewRowHeader: {
     flexDirection: 'row',
     paddingHorizontal: wp('2'),
     paddingVertical: hp('1'),
     alignItems: 'center',
   },
+  titleButtonStyle: {
+    fontSize: wp('4.5'),
+  },
   titleHeader: {
     fontFamily: Fonts.Roboto_Stab_Bold,
     fontSize: wp('4'),
     flex: 1,
     textAlign: 'center',
-  },
-  completeStyle: {
-    color: mainColors.colorCompleteText,
-    fontFamily: Fonts.Roboto_Slab_Regular,
-    fontSize: wp(3.8),
-    textAlign: 'center',
-    flex: 1,
   },
   watingStyle: {
     color: mainColors.colorWaitingText,
@@ -128,39 +101,6 @@ const styles = StyleSheet.create({
   cancelStyle: {
     color: mainColors.colorCancelText,
     fontFamily: Fonts.Roboto_Slab_Regular,
-  },
-  mealStyle: {
-    fontFamily: Fonts.Roboto_Slab_Regular,
-    color: mainColors.titleColor,
-    fontSize: wp(3.4),
-    flex: 1,
-  },
-  viewRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
-  },
-  priceStyle: {
-    fontFamily: Fonts.Roboto_Slab_Regular,
-    color: mainColors.titleColor,
-    fontSize: wp(3.4),
-    flex: 1,
-    textAlign: 'center',
-  },
-  sllStyle: {
-    fontFamily: Fonts.Roboto_Slab_Regular,
-    color: mainColors.titleColor,
-    fontSize: wp(3.4),
-  },
-  statusStyle: {
-    fontFamily: Fonts.Roboto_Slab_Regular,
-    color: mainColors.whiteColor,
-    fontSize: wp(3.4),
-    flex: 1,
-    textAlign: 'center',
-    padding: wp(0.5),
-    borderRadius: wp(1),
   },
   menuButton: {
     alignSelf: 'flex-end',
@@ -178,21 +118,3 @@ const styles = StyleSheet.create({
     marginBottom: hp(20),
   },
 });
-const RenderTextRow = (props: any) => {
-  const {data} = props;
-  const sllCancel =
-    data?.orderQuantity - (data?.completedQuantity + data?.waitingQuantity);
-  return (
-    <View style={styles.viewRow}>
-      <Text style={[styles.sllStyle, {color: '#F2DC10'}]}>
-        {data?.waitingQuantity}
-      </Text>
-      <Text style={[styles.sllStyle, {color: mainColors.blackColor}]}>/</Text>
-      <Text style={[styles.sllStyle, {color: '#7AC144'}]}>
-        {data?.completedQuantity}
-      </Text>
-      <Text style={[styles.sllStyle, {color: mainColors.blackColor}]}>/</Text>
-      <Text style={[styles.sllStyle, {color: '#EC2326'}]}>{sllCancel}</Text>
-    </View>
-  );
-};
