@@ -1,5 +1,5 @@
 import {types} from './actions';
-import lodash from 'lodash';
+import lodash, {forEach} from 'lodash';
 import {types as typesAction} from '../auth/actions';
 const initState = {
   loading: false,
@@ -63,19 +63,40 @@ export const systemsReducer: any = (state = initState, actions: any) => {
         const firstTable = lodash.get(it?.tables, '[0]', {});
         return firstTable._id == table?._id;
       });
+      const orderTableAllClone = lodash.cloneDeep(state?.orderTableAll);
+      console.log('orderTableAllClone', orderTableAllClone);
       if (indexTable == -1) {
+        orderTableAllClone.concat(firstItem);
         return {
           ...state,
-          orderTableAll: state.orderTableAll.concat(firstItem),
+          orderTableAll: orderTableAllClone,
         };
       }
-      const tableIndex = state.orderTableAll[indexTable];
-      const orderFoods = tableIndex?.orderFoods?.concat(firstItem?.orderFoods);
-      firstItem?.orderFoods?.concat(tableIndex?.orderFoods);
-      const itemFinal = {...firstItem, orderFoods};
-      state.orderTableAll.splice(indexTable, 1, itemFinal);
+      const tableIndex = orderTableAllClone[indexTable];
+      let indexFinish = 0;
+      lodash.forEach(tableIndex?.orderFoods, (itParent) => {
+        indexFinish += 1;
+        const findIndexChild = firstItem?.orderFoods?.findIndex(
+          (itChild) => itParent?.foodItem?._id == itChild?.foodItem?._id,
+        );
+        console.log(
+          'tableIndex?.orderFoods',
+          tableIndex?.orderFoods,
+          firstItem?.orderFoods,
+        );
+        if (findIndexChild != -1) {
+          tableIndex?.orderFoods?.splice(
+            findIndexChild,
+            1,
+            ...firstItem?.orderFoods,
+          );
+        }
+      });
+      console.log('indexFinish', indexFinish, tableIndex?.orderFoods);
+      if (indexFinish != tableIndex.orderFoods?.length) return;
       return {
         ...state,
+        orderTableAll: orderTableAllClone,
       };
     }
     case types.UPDATE_ORDER_FOOD:

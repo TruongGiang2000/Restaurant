@@ -46,6 +46,7 @@ export const styles = StyleSheet.create({
     borderRadius: wp(1),
     paddingVertical: wp(0.5),
     marginStart: wp(4),
+    backgroundColor: mainColors.whiteColor,
   },
 
   controlSll: {
@@ -83,6 +84,7 @@ export const styles = StyleSheet.create({
     paddingVertical: wp(1),
     marginStart: wp(2.5),
     paddingHorizontal: wp(2),
+    backgroundColor: mainColors.whiteColor,
   },
   sizeTitle: {
     fontFamily: Fonts.Roboto_Slab_Light,

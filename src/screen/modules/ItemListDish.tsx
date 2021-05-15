@@ -30,13 +30,11 @@ export const ItemLishDist = (props: any) => {
   const reduceSll = () => setSll((preState) => preState - 1);
   const raiseSll = () => setSll((preState) => preState + 1);
   const isComplete = item.waitingQuantity == 0 && item?.completedQuantity != 0;
+  console.log('item', item);
   const siteId = profileInfo?.siteId;
   const storeId = profileInfo?.storeId;
 
-  const totalMoney = orderFood.reduce((totalValue, currentValue) => {
-    return totalValue + currentValue?.price[0].valuePrice;
-  }, 0);
-
+  // const totalMoney = 0;
   const emitDataSocket = (type: 0 | 1) => {
     const dataEmit = {
       query: {
@@ -44,11 +42,11 @@ export const ItemLishDist = (props: any) => {
       },
       body: {
         tables: [idTable],
-        totalMoney,
+        totalMoney: 0,
         status: 1,
         createdBy: profileInfo?._id,
         noteGenerous: '',
-        orderFoods: mapUpdateOrderFood(orderFood, type, sll),
+        orderFoods: mapUpdateOrderFood(item, type, sll),
         siteId,
         storeId,
       },
@@ -62,9 +60,14 @@ export const ItemLishDist = (props: any) => {
   const cancelFood = () => emitDataSocket(0);
 
   const completeFood = () => emitDataSocket(1);
+
+  const isCancel = getStatusTextOrder(item) == 'Đã huỷ';
   return (
     <>
-      <Ripple style={styles.viewRowHeader} onPress={showModal}>
+      <Ripple
+        style={styles.viewRowHeader}
+        onPress={showModal}
+        disabled={isCancel}>
         <Text style={styles.mealStyle}>{item?.foodItem?.foodName}</Text>
         {isComplete ? (
           <Text style={styles.completeStyle}>{item?.completedQuantity}</Text>

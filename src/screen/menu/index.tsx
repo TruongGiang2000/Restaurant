@@ -63,9 +63,9 @@ const MyTabs = (props: any) => {
     profileInfo: state?.auth?.profileInfo,
   }));
   const {activeTable} = props?.route?.params;
-  const totalMoney = orderFood.reduce((totalValue, currentValue) => {
-    return totalValue + currentValue?.price[0].valuePrice;
-  }, 0);
+  // const totalMoney = orderFood.reduce((totalValue, currentValue) => {
+  //   return totalValue + currentValue?.price[0].valuePrice * currentValue?.sll;
+  // }, 0);
   const orderFoods = mapOrderFood(orderFood);
   const siteId = profileInfo?.siteId;
   const storeId = profileInfo?.storeId;
@@ -77,7 +77,7 @@ const MyTabs = (props: any) => {
       },
       body: {
         tables: [Object.values(activeTable)[0]],
-        totalMoney,
+        totalMoney: 0,
         status: 1,
         createdBy: profileInfo?._id,
         noteGenerous: '',

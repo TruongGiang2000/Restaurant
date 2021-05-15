@@ -35,14 +35,12 @@ export const mapUpdateOrderFood = (
   typeAction: 0 | 1,
   sll: number,
 ) => {
-  return data?.map((it) => {
-    const completedQuantity = typeAction == 0 ? 0 : sll;
-    const _it = {
-      ...it,
-      process: 2,
-      waitingQuantity: it?.orderQuantity - sll,
-      completedQuantity: completedQuantity,
-    };
-    return _it;
-  });
+  const completedQuantity = typeAction == 0 ? 0 : sll;
+  const _it = {
+    ...data,
+    process: 2,
+    waitingQuantity: data?.orderQuantity - sll,
+    completedQuantity: completedQuantity,
+  };
+  return _it;
 };
